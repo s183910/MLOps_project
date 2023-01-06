@@ -12,7 +12,7 @@ def train(lr, output_file):
     model.train()
     criterion = nn.NLLLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    training_set = data.loadTrainSet()
+    training_set = data.load_train_set()
 
     running_loss = 0
 
