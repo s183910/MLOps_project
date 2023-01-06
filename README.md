@@ -16,7 +16,7 @@ The objective of this project is to develop a Deep Learning model capable of tra
 
 ## Frameworks expected to be implemented
 
-- Which: We expect to be using PyTorch and/or Tensorflow. Potentially, the framework MediaPipe will be applied to reduce images to hand landmarks.
+- Which: We expect to use PyTorch for developing the model, possibly with Lighting on top. Potentially, the framework MediaPipe will be applied to reduce images to hand landmarks.
 <!-- - How: We intend to utilise a pretrained model from the Transformer framework, as we will focus on creating a well organised, reproducable, scalable and xx project repository. -->
 - How: We intend to develop a rather simple CNN, as we will focus on creating a well organised, reproducable and scalable project repository.
 
@@ -27,7 +27,7 @@ The data set which will be used in this project is the [Sign Language MNIST](htt
 If we consider it a viable option, will also look for a data set with 3D hand landmarks coordinates and matching hand gestures. If no data sets are available, we can create our own, or attempt to convert existing images from the data set to hand landmarks using MediaPipe.
 
 ## Deep learning models
-Due to the time limitations on the project, we make use of pre-trained models. The Deep Learning model used for image classification will be a pre-trained ResNet50 model, imported using PyTorch. If we manage to work with hand landmarks instead of images with the help of 'MediaPipe Hand', it will likely be possible to get good performance with a low complexity model like a Random Forest (RF), considering the low dimensionality of the data (21 landmarks x 3 coordinates).
+Due to the time limitations on the project, we make use of pre-trained models and do transfer learning. The Deep Learning model used for image classification will be a pre-trained ResNet50 model, imported using PyTorch. If we manage to work with hand landmarks instead of images with the help of 'MediaPipe Hand', it will likely be possible to get good performance with a low complexity model like a Random Forest (RF), considering the low dimensionality of the data (21 landmarks x 3 coordinates).
 
 
 
@@ -35,15 +35,15 @@ Project Organization
 ------------
 
     ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
+    ├── Makefile           <- Download data with `make data`, train model with `make train`, and evaluate with `make predict`.
+    ├── README.md
     ├── data
     │   ├── external       <- Data from third party sources.
     │   ├── interim        <- Intermediate data that has been transformed.
     │   ├── processed      <- The final, canonical data sets for modeling.
     │   └── raw            <- The original, immutable data dump.
     │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+    ├── docs
     │
     ├── models             <- Trained and serialized models, model predictions, or model summaries
     │
@@ -56,28 +56,27 @@ Project Organization
     ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
     │   └── figures        <- Generated graphics and figures to be used in reporting
     │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
+    ├── requirements.txt
     │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
+    ├── setup.py           <- Make project pip installable (pip install -e .) so `src` can be imported.
+    ├── src
+    │   ├── __init__.py
     │   │
-    │   ├── data           <- Scripts to download or generate data
+    │   ├── data
     │   │   └── make_dataset.py
     │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
+    │   ├── features
     │   │   └── build_features.py
     │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
+    │   ├── models
+    │   │   │
     │   │   ├── predict_model.py
     │   │   └── train_model.py
     │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
+    │   └── visualization
     │       └── visualize.py
     │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+    └── tox.ini
 
 
 --------
