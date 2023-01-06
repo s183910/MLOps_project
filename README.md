@@ -32,8 +32,7 @@ TODO:
 Due to the time limitations on the project, we make use of pre-trained models. We will implement xxx and xxx and compare the results of the gesture recognition
 \\
 
-If we manage to work with hand joints instead of images with the help of MediaPipe, it will likely be possible to get good performance with very shallow models which we can create from scratch, considering the low dimensionality of the data (21 joints x 3 coordinates).
-
+If we manage to work with hand landmarks instead of images with the help of MediaPipe, it will likely be possible to get good performance with very shallow neural networks, considering the low dimensionality of the data (21 landmarks x 3 coordinates). Simpler baselines like Random Forest (RF) might also work well.
 
 
 
