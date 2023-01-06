@@ -1,7 +1,34 @@
-y
+# MLOps project - Hand Gesture Recognition
 ==============================
 
-A short description of the project.
+Katrine Bay s183910
+Rasmus Bryld s183898
+Asger Schultz s18
+Eper Stinner
+
+
+__Main goal of the project__
+The main goal of this project is to build a Convolutional Neural Network model (CNN) which is able to convert static hand gestures and sign language into the corresponding letter of the English alphabet. If possible, the network will be expanded to work with movements as well, by classifying sequences of images. Dependent on the performance the images could be converted to 3D hand joint coordinates using MediaPipe.
+
+
+__Frameworks expected to be implemented__
+- Which: We expect to be using PyTorch, Tensorflow and Transformers framework.
+- How: We intend to utilise a pretrained model from the Transformer framework, as we will focus on creating a well organised, reproducable, scalable and xx project repository.
+
+__Data__
+The data set which will be used in this project is the [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist) data set on Kaggle licensed under [CC0: Public Domain](https://creativecommons.org/publicdomain/zero/1.0/). If we consider it a viable option, will also look for a data set with 3D hand joint coordinates and matching hand gestures. If no data sets are available, we can create our own, or convert existing images to hand joints using MediaPipe under the assumption that MediaPipe can accurately estimate the hand joints.
+
+
+__Deep learning models__
+
+Due to the time limitations on the project, we make use of pre-trained models. We will implement xxx and xxx and compare the results of the gesture recognition
+\\
+
+If we manage to work with hand joints instead of images with the help of MediaPipe, it will likely be possible to get good performance with very shallow models which we can create from scratch, considering the low dimensionality of the data (21 joints x 3 coordinates).
+
+
+
+
 
 Project Organization
 ------------
