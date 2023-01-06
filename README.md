@@ -12,12 +12,11 @@ Eper Stinner s222955
 
 ## Main goal of the project
 
-The main goal of this project is to obtain a Convolutional Neural Network model (CNN) which is able to convert the static hand gestures of American sign language into the corresponding letter of the English alphabet. If possible, the network will be expanded to work with dynamic movements as well, by classifying sequences of images, inorder to translate signs corresponding to words. Dependent on the performance, the images could be converted to 3D hand joint coordinates using MediaPipe.
-
+The objective of this project is to develop a Convolutional Neural Network (CNN) capable of transcribing static hand gestures in American Sign Language (ASL) into the corresponding English alphabet letters. Additionally, if feasible, the network will be enhanced to classify dynamic hand movement sequences to translate signs representing words. The potential for converting the images to 3D hand landmarks using MediaPipe, before classification, will also be explored.
 
 ## Frameworks expected to be implemented
 
-- Which: We expect to be using PyTorch and Tensorflow. Potentially, the framework MediaPipe will be applied.
+- Which: We expect to be using PyTorch and/or Tensorflow. Potentially, the framework MediaPipe will be applied.
 <!-- - How: We intend to utilise a pretrained model from the Transformer framework, as we will focus on creating a well organised, reproducable, scalable and xx project repository. -->
 - How: We intend to utilise a rather simple CNN, as we will focus on creating a well organised, reproducable, scalable and xx project repository.
 
