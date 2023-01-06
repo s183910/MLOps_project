@@ -1,5 +1,5 @@
 # MLOps project - Hand Gesture Recognition
-==============================
+<!-- ============================== -->
 
 Katrine Bay s183910
 
@@ -12,21 +12,24 @@ Eper Stinner s222955
 
 ## Main goal of the project
 
-The main goal of this project is to build a Convolutional Neural Network model (CNN) which is able to convert static hand gestures and sign language into the corresponding letter of the English alphabet. If possible, the network will be expanded to work with movements as well, by classifying sequences of images. Dependent on the performance the images could be converted to 3D hand joint coordinates using MediaPipe.
+The main goal of this project is to obtain a Convolutional Neural Network model (CNN) which is able to convert the static hand gestures of American sign language into the corresponding letter of the English alphabet. If possible, the network will be expanded to work with dynamic movements as well, by classifying sequences of images, inorder to translate signs corresponding to words. Dependent on the performance, the images could be converted to 3D hand joint coordinates using MediaPipe.
 
 
 ## Frameworks expected to be implemented
 
-- Which: We expect to be using PyTorch, Tensorflow and Transformers framework.
-- How: We intend to utilise a pretrained model from the Transformer framework, as we will focus on creating a well organised, reproducable, scalable and xx project repository.
+- Which: We expect to be using PyTorch and Tensorflow. Potentially, the framework MediaPipe will be applied.
+<!-- - How: We intend to utilise a pretrained model from the Transformer framework, as we will focus on creating a well organised, reproducable, scalable and xx project repository. -->
+- How: We intend to utilise a rather simple CNN, as we will focus on creating a well organised, reproducable, scalable and xx project repository.
 
 ## Data
 
-The data set which will be used in this project is the [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist) data set on Kaggle licensed under [CC0: Public Domain](https://creativecommons.org/publicdomain/zero/1.0/). If we consider it a viable option, will also look for a data set with 3D hand joint coordinates and matching hand gestures. If no data sets are available, we can create our own, or convert existing images to hand joints using MediaPipe under the assumption that MediaPipe can accurately estimate the hand joints.
+The data set which will be used in this project is the [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist) data set on Kaggle licensed under [CC0: Public Domain](https://creativecommons.org/publicdomain/zero/1.0/). TODO here we will write about the data - look in the overleaf.
+
+If we consider it a viable option, will also look for a data set with 3D hand joint coordinates and matching hand gestures. If no data sets are available, we can create our own, or convert existing images to hand joints using MediaPipe under the assumption that MediaPipe can accurately estimate the hand joints.
 
 
 ## Deep learning models
-
+TODO:
 Due to the time limitations on the project, we make use of pre-trained models. We will implement xxx and xxx and compare the results of the gesture recognition
 \\
 
