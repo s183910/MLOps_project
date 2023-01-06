@@ -16,7 +16,7 @@ The objective of this project is to develop a Convolutional Neural Network (CNN)
 
 ## Frameworks expected to be implemented
 
-- Which: We expect to be using PyTorch and/or Tensorflow. Potentially, the framework MediaPipe will be applied.
+- Which: We expect to be using PyTorch and/or Tensorflow. Potentially, the framework MediaPipe will be applied to reduce images to hand landmarks.
 <!-- - How: We intend to utilise a pretrained model from the Transformer framework, as we will focus on creating a well organised, reproducable, scalable and xx project repository. -->
 - How: We intend to utilise a rather simple CNN, as we will focus on creating a well organised, reproducable, scalable and xx project repository.
 
