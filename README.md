@@ -18,22 +18,16 @@ The objective of this project is to develop a Convolutional Neural Network (CNN)
 
 - Which: We expect to be using PyTorch and/or Tensorflow. Potentially, the framework MediaPipe will be applied to reduce images to hand landmarks.
 <!-- - How: We intend to utilise a pretrained model from the Transformer framework, as we will focus on creating a well organised, reproducable, scalable and xx project repository. -->
-- How: We intend to utilise a rather simple CNN, as we will focus on creating a well organised, reproducable, scalable and xx project repository.
+- How: We intend to develop a rather simple CNN, as we will focus on creating a well organised, reproducable and scalable project repository.
 
 ## Data
 
 The data set which will be used in this project is the [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist) data set on Kaggle licensed under [CC0: Public Domain](https://creativecommons.org/publicdomain/zero/1.0/). The data set contains 24 classes of images representing the letters of ASL (excluding J and Z as these require motion). The training data (27,455 cases) and test data (7,172 cases) which represent a single 28x28 pixel image with grayscale values between 0-255. Each training and test case represents a label (0-25) as a one-to-one map for each alphabetic letter A-Z (and no cases for 9=J or 25=Z because of gesture motions).[source](https://www.kaggle.com/datasets/datamunge/sign-language-mnist).
 
-If we consider it a viable option, will also look for a data set with 3D hand joint coordinates and matching hand gestures. If no data sets are available, we can create our own, or convert existing images to hand joints using MediaPipe under the assumption that MediaPipe can accurately estimate the hand joints.
-
+If we consider it a viable option, will also look for a data set with 3D hand landmarks coordinates and matching hand gestures. If no data sets are available, we can create our own, or attempt to convert existing images from the data set to hand landmarks using MediaPipe.
 
 ## Deep learning models
-TODO:
-Due to the time limitations on the project, we make use of pre-trained models. We will implement xxx and xxx and compare the results of the gesture recognition
-\\
-
-If we manage to work with hand landmarks instead of images with the help of MediaPipe, it will likely be possible to get good performance with very shallow neural networks, considering the low dimensionality of the data (21 landmarks x 3 coordinates). Simpler baselines like Random Forest (RF) might also work well.
-
+Due to the time limitations on the project, we make use of pre-trained models. The Deep Learning model used for image classification will be a pre-trained ResNet50 model, imported using PyTorch. If we manage to work with hand landmarks instead of images with the help of 'MediaPipe Hand', it will likely be possible to get good performance with a low complexity model like a Random Forest (RF), considering the low dimensionality of the data (21 landmarks x 3 coordinates).
 
 
 
