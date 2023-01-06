@@ -2,24 +2,30 @@
 ==============================
 
 Katrine Bay s183910
+
 Rasmus Bryld s183898
-Asger Schultz s18
-Eper Stinner
+
+Asger Schultz s183912
+
+Eper Stinner s222955
 
 
-__Main goal of the project__
+## Main goal of the project
+
 The main goal of this project is to build a Convolutional Neural Network model (CNN) which is able to convert static hand gestures and sign language into the corresponding letter of the English alphabet. If possible, the network will be expanded to work with movements as well, by classifying sequences of images. Dependent on the performance the images could be converted to 3D hand joint coordinates using MediaPipe.
 
 
-__Frameworks expected to be implemented__
+## Frameworks expected to be implemented
+
 - Which: We expect to be using PyTorch, Tensorflow and Transformers framework.
 - How: We intend to utilise a pretrained model from the Transformer framework, as we will focus on creating a well organised, reproducable, scalable and xx project repository.
 
-__Data__
+## Data
+
 The data set which will be used in this project is the [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist) data set on Kaggle licensed under [CC0: Public Domain](https://creativecommons.org/publicdomain/zero/1.0/). If we consider it a viable option, will also look for a data set with 3D hand joint coordinates and matching hand gestures. If no data sets are available, we can create our own, or convert existing images to hand joints using MediaPipe under the assumption that MediaPipe can accurately estimate the hand joints.
 
 
-__Deep learning models__
+## Deep learning models
 
 Due to the time limitations on the project, we make use of pre-trained models. We will implement xxx and xxx and compare the results of the gesture recognition
 \\
