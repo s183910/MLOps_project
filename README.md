@@ -18,7 +18,7 @@ The objective of this project is to develop a Deep Learning model capable of tra
 
 - Which: We expect to use PyTorch for developing the model, possibly with Lighting on top. Potentially, the framework MediaPipe will be applied to reduce images to hand landmarks.
 <!-- - How: We intend to utilise a pretrained model from the Transformer framework, as we will focus on creating a well organised, reproducable, scalable and xx project repository. -->
-- How: We intend to develop a rather simple CNN, as we will focus on creating a well organised, reproducable and scalable project repository.
+- How: We intend to first develop a rather simple CNN, as we will focus on creating a well organised, reproducable and scalable project repository. To improve, we will make use of pretrained models from the Pytorch Image Models framework.
 
 ## Data
 
