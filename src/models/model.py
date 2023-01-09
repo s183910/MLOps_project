@@ -1,7 +1,13 @@
 from torch import nn
 
 
-def loadSimpleModel(input_size):
+def loadSimpleModel(input_size: int) -> nn.Module:
+    """
+    Load simple neural network with given input size.
+
+    Parameters:
+        input_size (int): input layer size
+    """
     return nn.Sequential(
         nn.Linear(input_size, 256),
         nn.ReLU(),
