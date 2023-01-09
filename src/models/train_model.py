@@ -1,6 +1,4 @@
 import logging
-
-import torch
 from model import loadSimpleModel
 from torch import nn, optim, save, utils
 from torchvision import transforms
