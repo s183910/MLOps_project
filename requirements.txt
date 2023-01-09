@@ -13,3 +13,10 @@ torchvision
 pandas
 pytest
 pytest-cov
+pelutils
+
+flake8
+isort
+black
+
+mypy
