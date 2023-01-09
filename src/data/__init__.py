@@ -1,7 +1,8 @@
 from typing import Callable, Tuple, Union
-import torch
-import pandas as pd
+
 import numpy as np
+import pandas as pd
+import torch
 
 
 class SignMNISTDataset(torch.utils.data.Dataset):
