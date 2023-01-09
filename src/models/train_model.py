@@ -1,34 +1,47 @@
-import torch
-from torch import nn
+from torch import nn, utils, optim, save
 import logging
-import data
+import torch
+from src.data import SignMNISTDataset
 from model import Initial
+from torchvision import transforms
 
 def train(lr, output_file):
     logger = logging.getLogger(__name__)
     logger.info(f'Training with learning rate ${lr}')
-
-    model = Initial()
+    
+    logger.info('Loading training set')
+    trainset = SignMNISTDataset(csv_file='data/raw/sign_mnist_train.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]))
+    trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
+    images, _  = next(iter(trainloader))
+    model = nn.Sequential(nn.Linear(images.shape[1], 256),
+                           nn.ReLU(),
+                           nn.Linear(256, 128),
+                           nn.ReLU(),
+                           nn.Linear(128, 64),
+                           nn.ReLU(),
+                           nn.Linear(64, 25),
+                           nn.LogSoftmax(dim=1))
     model.train()
     criterion = nn.NLLLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    training_set = data.load_train_set()
+    optimizer = optim.SGD(model.parameters(), lr=lr)
 
-    running_loss = 0
+    epochs = 2
 
-    for images, labels in training_set:
-        optimizer.zero_grad()
-        logits = model(images)
-        loss = criterion(logits, labels)
-        loss.backward()
-        optimizer.step()
+    for e in range(epochs):
+        running_loss = 0
+        for images, labels in trainloader:
+            optimizer.zero_grad()
+            logits = model(images)
+            loss = criterion(logits, labels)
+            loss.backward()
+            optimizer.step()
 
-        running_loss += loss.item()
-    else:
-        logger.info(f"Training finished with loss: ${running_loss/len(training_set)}")
+            running_loss += loss.item()
+        else:
+            logger.info(f"Training finished with loss: ${running_loss/len(trainloader)}")
 
     # output trained model state
-    torch.save(model.state_dict(), output_file)
+    save(model.state_dict(), output_file)
 
 
 if __name__ == "__main__":
