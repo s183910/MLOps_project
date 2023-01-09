@@ -1,10 +1,8 @@
+from torch import nn, utils, optim, save
+from src.data import SignMNISTDataset
 from model import SignModel
 from pelutils import log
-from torch import nn, optim, save, utils
 from torchvision import transforms
-
-from src.data import SignMNISTDataset
-
 
 def train(lr: float, output_file: str, epochs: int = 2) -> None:
     """
@@ -20,10 +18,11 @@ def train(lr: float, output_file: str, epochs: int = 2) -> None:
     log(f"Training with learning rate {lr}")
 
     log("Loading training set")
+
     trainset = SignMNISTDataset(
         csv_file="data/raw/sign_mnist_train.csv",
         transform=transforms.Compose(
-            [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
+            [transforms.ToTensor(), transforms.Normalize(0, 255)]
         ),
     )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
@@ -44,7 +43,7 @@ def train(lr: float, output_file: str, epochs: int = 2) -> None:
 
             running_loss += loss.item()
         else:
-            log(f"Training finished with loss: {running_loss/len(trainloader)}")
+            log(f"Training finished for epoch no. {e} with loss: {running_loss/len(trainloader)}")
 
     # output trained model state
     save(model.state_dict(), output_file)

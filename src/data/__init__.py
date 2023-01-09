@@ -1,12 +1,10 @@
 from typing import Callable, Tuple, Union
-
-import numpy as np
+import torch
 import pandas as pd
-from torch import Tensor, is_tensor, nn
-from torch.utils.data import Dataset
+import numpy as np
 
 
-class SignMNISTDataset(Dataset):
+class SignMNISTDataset(torch.utils.data.Dataset):
     """
     A class to represent the Sign MNIST Dataset.
     To be used with torch.utils.data.DataLoader
@@ -17,7 +15,7 @@ class SignMNISTDataset(Dataset):
     """
 
     def __init__(
-        self, csv_file: str, transform: Union[Callable, nn.Module] = None
+        self, csv_file: str, transform: Union[Callable, torch.nn.Module] = None
     ) -> None:
         """
         Get data record at specified location.
@@ -44,7 +42,7 @@ class SignMNISTDataset(Dataset):
         """
         return len(self.raw_signs)
 
-    def __getitem__(self, index: int) -> Tuple[Tensor, Tensor]:
+    def __getitem__(self, index: int) -> Tuple[torch.Tensor, torch.Tensor]:
         """
         Get data record at specified location.
 
@@ -54,7 +52,7 @@ class SignMNISTDataset(Dataset):
         Returns:
             :rtype:  (Tensor, Tensor): images, labels as tuple
         """
-        if is_tensor(index):
+        if torch.is_tensor(index):
             index = index.tolist()
         labels = self.raw_signs.iloc[index, 0]
         images = self.raw_signs.iloc[index, 1:]

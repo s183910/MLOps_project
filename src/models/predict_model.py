@@ -20,7 +20,7 @@ def evaluate(checkpoint: str) -> None:
     testset = SignMNISTDataset(
         csv_file="data/raw/sign_mnist_test.csv",
         transform=transforms.Compose(
-            [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
+            [transforms.ToTensor(), transforms.Normalize(0, 255)]
         ),
     )
     testloader = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=True)
