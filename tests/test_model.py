@@ -1,11 +1,11 @@
 import torch
 
-from src.models.model import loadSimpleModel
+from src.models.model import SignModel
 
 
 @torch.no_grad()
 def test_model_input_output():
-    model = loadSimpleModel(28 * 28)
+    model = SignModel(28 * 28, 25)
     n = 10
     x = torch.randn(n, 28 * 28)
     y = model(x)
