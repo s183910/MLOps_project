@@ -27,7 +27,7 @@ requirements: test_environment
 
 ## Make Dataset
 data: requirements
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+	dvc pull
 
 ## Delete all compiled Python files
 clean:
@@ -148,3 +148,7 @@ train:
 
 predict:
 	python3 src/models/predict_model.py
+
+test:
+	coverage run -m pytest tests/
+

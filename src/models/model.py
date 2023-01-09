@@ -3,6 +3,7 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
+
 class SignModel(nn.Module):
 
     _hidden_layer_sizes = (256, 128, 64)
@@ -12,6 +13,12 @@ class SignModel(nn.Module):
         self._module = nn.Sequential(*self._build_layers(input_size, output_size))
 
     def forward(self, x: torch.FloatTensor) -> torch.FloatTensor:
+        if x.ndim != 2:
+            raise ValueError("Expected input to be a 2D Tensor")
+        if x.shape[1] != self._module[0].in_features:
+            raise ValueError(
+                f"Expected input to be of size [batch_size, {self._module[0].in_features}]"
+            )
         return self._module(x)
 
     @classmethod
