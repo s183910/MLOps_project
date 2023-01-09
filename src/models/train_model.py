@@ -1,6 +1,5 @@
 from torch import nn, utils, optim, save
 import logging
-import torch
 from src.data import SignMNISTDataset
 from model import SignModel
 from torchvision import transforms
