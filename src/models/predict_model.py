@@ -1,4 +1,4 @@
-import logging
+from pelutils import log
 
 import torch
 from model import loadSimpleModel
@@ -7,15 +7,14 @@ from torchvision import transforms
 from src.data import SignMNISTDataset
 
 
-def evaluate(checkpoint):
+def evaluate(checkpoint: str) -> None:
     """
     Loads model state from checkpoint and validates it. Prints the model accuracy.
 
     Parameters:
         checkpoint (string): saved model state (trained)
     """
-    logger = logging.getLogger(__name__)
-    logger.info("Loading test set")
+    log("Loading test set")
     testset = SignMNISTDataset(
         csv_file="data/raw/sign_mnist_test.csv",
         transform=transforms.Compose(
@@ -41,8 +40,10 @@ def evaluate(checkpoint):
             results.append(equals.type(torch.FloatTensor).reshape(-1))
         else:
             accuracy = torch.mean(torch.concat(results))
-            print(f"Accuracy: {accuracy.item()*100}%")
+            log(f"Accuracy: {accuracy.item()*100} %")
 
 
 if __name__ == "__main__":
-    evaluate("models/initial.pth")
+    log.configure("train.log")
+    with log.log_errors:
+        evaluate("models/initial.pth")
