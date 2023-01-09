@@ -1,8 +1,9 @@
+from typing import Callable, Tuple, Union
+
 import numpy as np
 import pandas as pd
-from torch import Tensor, nn, is_tensor
+from torch import Tensor, is_tensor, nn
 from torch.utils.data import Dataset
-from typing import Tuple, Union, Callable
 
 
 class SignMNISTDataset(Dataset):

@@ -1,7 +1,7 @@
 from model import SignModel
+from pelutils import log
 from torch import nn, optim, save, utils
 from torchvision import transforms
-from pelutils import log
 
 from src.data import SignMNISTDataset
 
