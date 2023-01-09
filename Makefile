@@ -150,4 +150,5 @@ predict:
 	python3 src/models/predict_model.py
 
 test:
-	pytest tests/
+	coverage run -m pytest tests/
+
