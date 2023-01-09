@@ -1,15 +1,26 @@
-from torch import nn, utils, optim, save
-import logging
-from src.data import SignMNISTDataset
 from model import SignModel
+from pelutils import log
+from torch import nn, optim, save, utils
 from torchvision import transforms
 
+from src.data import SignMNISTDataset
 
-def train(lr, output_file):
-    logger = logging.getLogger(__name__)
-    logger.info(f"Training with learning rate ${lr}")
 
-    logger.info("Loading training set")
+def train(lr: float, output_file: str, epochs: int = 2) -> None:
+    """
+    Trains the model using the provided learning rate and saves it.
+
+        Parameters:
+            lr (float): The learning rate as a float
+            output_file (string): Path to the file where the trained model should be saved
+
+        Args:
+            epochs (int): number of epochs to train for (default 2)
+    """
+    log(f"Training with learning rate {lr}")
+
+    log("Loading training set")
+
     trainset = SignMNISTDataset(
         csv_file="data/raw/sign_mnist_train.csv",
         transform=transforms.Compose(
@@ -23,8 +34,6 @@ def train(lr, output_file):
     criterion = nn.NLLLoss()
     optimizer = optim.SGD(model.parameters(), lr=lr)
 
-    epochs = 2
-
     for e in range(epochs):
         running_loss = 0
         for images, labels in trainloader:
@@ -36,8 +45,8 @@ def train(lr, output_file):
 
             running_loss += loss.item()
         else:
-            logger.info(
-                f"Training finished with loss: ${running_loss/len(trainloader)}"
+            log(
+                f"Training finished for epoch no. {e} with loss: {running_loss/len(trainloader)}"
             )
 
     # output trained model state
@@ -45,4 +54,6 @@ def train(lr, output_file):
 
 
 if __name__ == "__main__":
-    train(0.001, "models/initial.pth")
+    log.configure("train.log")
+    with log.log_errors:
+        train(0.001, "models/initial.pth")
