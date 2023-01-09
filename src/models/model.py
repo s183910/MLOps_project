@@ -3,6 +3,7 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
+
 class SignModel(nn.Module):
 
     _hidden_layer_sizes = (256, 128, 64)

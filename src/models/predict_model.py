@@ -13,10 +13,15 @@ def evaluate(checkpoint):
         checkpoint (string): saved model state (trained)
     """
     logger = logging.getLogger(__name__)
-    logger.info('Loading test set')
-    testset = SignMNISTDataset(csv_file='data/raw/sign_mnist_test.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 255)]))
+    logger.info("Loading test set")
+    testset = SignMNISTDataset(
+        csv_file="data/raw/sign_mnist_test.csv",
+        transform=transforms.Compose(
+            [transforms.ToTensor(), transforms.Normalize(0, 255)]
+        ),
+    )
     testloader = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=True)
-    images, _  = next(iter(testloader))
+    images, _ = next(iter(testloader))
 
     state_dict = torch.load(checkpoint)
     model = SignModel(images.shape[1], 25)

@@ -4,15 +4,15 @@ import torch
 import pandas as pd
 import numpy as np
 
-class SignMNISTDataset(Dataset):
 
+class SignMNISTDataset(Dataset):
     def __init__(self, csv_file, transform=None):
         self.raw_signs = pd.read_csv(csv_file)
         self.transform = transform
 
     def __len__(self):
         return len(self.raw_signs)
-    
+
     def __getitem__(self, index):
         if torch.is_tensor(index):
             index = index.tolist()
@@ -21,6 +21,5 @@ class SignMNISTDataset(Dataset):
         images = np.array([images])
         images = images.astype(np.float32)
         if self.transform:
-            images = self.transform(images).reshape(-1)        
+            images = self.transform(images).reshape(-1)
         return images, labels
-

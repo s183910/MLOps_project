@@ -5,14 +5,20 @@ from src.data import SignMNISTDataset
 from model import SignModel
 from torchvision import transforms
 
+
 def train(lr, output_file):
     logger = logging.getLogger(__name__)
-    logger.info(f'Training with learning rate ${lr}')
-    
-    logger.info('Loading training set')
-    trainset = SignMNISTDataset(csv_file='data/raw/sign_mnist_train.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 255)]))
+    logger.info(f"Training with learning rate ${lr}")
+
+    logger.info("Loading training set")
+    trainset = SignMNISTDataset(
+        csv_file="data/raw/sign_mnist_train.csv",
+        transform=transforms.Compose(
+            [transforms.ToTensor(), transforms.Normalize(0, 255)]
+        ),
+    )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
-    images, _  = next(iter(trainloader))
+    images, _ = next(iter(trainloader))
     model = SignModel(images.shape[1], 25)
     model.train()
     criterion = nn.NLLLoss()
@@ -31,11 +37,13 @@ def train(lr, output_file):
 
             running_loss += loss.item()
         else:
-            logger.info(f"Training finished with loss: ${running_loss/len(trainloader)}")
+            logger.info(
+                f"Training finished with loss: ${running_loss/len(trainloader)}"
+            )
 
     # output trained model state
     save(model.state_dict(), output_file)
 
 
 if __name__ == "__main__":
-    train(0.001, 'models/initial.pth')
+    train(0.001, "models/initial.pth")
