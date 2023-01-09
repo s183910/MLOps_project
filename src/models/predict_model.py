@@ -13,7 +13,7 @@ def evaluate(checkpoint: str) -> None:
 
     Parameters:
         checkpoint (string): saved model state (trained)
-    
+
     Returns:
         :rtype: None
     """

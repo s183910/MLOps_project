@@ -4,6 +4,7 @@ from torch import Tensor, nn, is_tensor
 from torch.utils.data import Dataset
 from typing import Tuple, Union, Callable
 
+
 class SignMNISTDataset(Dataset):
     """
     A class to represent the Sign MNIST Dataset.
@@ -13,19 +14,22 @@ class SignMNISTDataset(Dataset):
         raw_signs (pandas.DataFrame): Raw data from csv loaded into a dataframe
         transform (Callable | nn.Module): callable transform to execute on raw data
     """
-    def __init__(self, csv_file: str, transform: Union[Callable, nn.Module]=None) -> None:
+
+    def __init__(
+        self, csv_file: str, transform: Union[Callable, nn.Module] = None
+    ) -> None:
         """
         Get data record at specified location.
 
         Parameters:
             index (int): location of record
-            csv_file (string): 
+            csv_file (string):
 
         Args:
             transform (Callable | nn.Module) = None : transforms to apply to the data on access
-        
+
         Returns:
-            :rtype:  None    
+            :rtype:  None
         """
         self.raw_signs = pd.read_csv(csv_file)
         self.transform = transform
@@ -33,9 +37,9 @@ class SignMNISTDataset(Dataset):
     def __len__(self) -> int:
         """
         Get length of dataset.
-        
+
         Returns:
-            :rtype:  int: number of records in dataset   
+            :rtype:  int: number of records in dataset
         """
         return len(self.raw_signs)
 
@@ -45,9 +49,9 @@ class SignMNISTDataset(Dataset):
 
         Parameters:
             index (int): location of record
-        
+
         Returns:
-            :rtype:  (Tensor, Tensor): images, labels as tuple    
+            :rtype:  (Tensor, Tensor): images, labels as tuple
         """
         if is_tensor(index):
             index = index.tolist()

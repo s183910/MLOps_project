@@ -13,7 +13,7 @@ def train(lr: float, output_file: str, epochs: int = 2) -> None:
         Parameters:
             lr (float): The learning rate as a float
             output_file (string): Path to the file where the trained model should be saved
-        
+
         Args:
             epochs (int): number of epochs to train for (default 2)
     """
@@ -44,9 +44,7 @@ def train(lr: float, output_file: str, epochs: int = 2) -> None:
 
             running_loss += loss.item()
         else:
-            log(
-                f"Training finished with loss: {running_loss/len(trainloader)}"
-            )
+            log(f"Training finished with loss: {running_loss/len(trainloader)}")
 
     # output trained model state
     save(model.state_dict(), output_file)
