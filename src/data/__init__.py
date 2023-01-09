@@ -19,8 +19,8 @@ class SignMNISTDataset(Dataset):
         labels = self.raw_signs.iloc[index, 0]
         images = self.raw_signs.iloc[index, 1:]
         images = np.array([images])
-        images = images.astype('float')
+        images = images.astype(np.float32)
         if self.transform:
             images = self.transform(images).reshape(-1)        
-        return (images, labels)
+        return images, labels
 
