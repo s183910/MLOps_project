@@ -14,7 +14,7 @@ def evaluate(checkpoint):
     """
     logger = logging.getLogger(__name__)
     logger.info('Loading test set')
-    testset = SignMNISTDataset(csv_file='data/raw/sign_mnist_train.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]))
+    testset = SignMNISTDataset(csv_file='data/raw/sign_mnist_test.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]))
     testloader = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=True)
     images, _  = next(iter(testloader))
 
