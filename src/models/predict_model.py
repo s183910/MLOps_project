@@ -1,7 +1,7 @@
 import torch
 from torchvision import transforms
 import logging
-from model import loadSimpleModel
+from model import SignModel
 from src.data import SignMNISTDataset
 
 
@@ -14,12 +14,12 @@ def evaluate(checkpoint):
     """
     logger = logging.getLogger(__name__)
     logger.info('Loading test set')
-    testset = SignMNISTDataset(csv_file='data/raw/sign_mnist_test.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]))
+    testset = SignMNISTDataset(csv_file='data/raw/sign_mnist_test.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 255)]))
     testloader = torch.utils.data.DataLoader(testset, batch_size=64, shuffle=True)
     images, _  = next(iter(testloader))
 
     state_dict = torch.load(checkpoint)
-    model = loadSimpleModel(images.shape[1])
+    model = SignModel(images.shape[1], 25)
     model.load_state_dict(state_dict)
 
     accuracy = 0

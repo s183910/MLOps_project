@@ -10,7 +10,7 @@ def train(lr, output_file):
     logger.info(f'Training with learning rate ${lr}')
     
     logger.info('Loading training set')
-    trainset = SignMNISTDataset(csv_file='data/raw/sign_mnist_train.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]))
+    trainset = SignMNISTDataset(csv_file='data/raw/sign_mnist_train.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 255)]))
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
     images, _  = next(iter(trainloader))
     model = SignModel(images.shape[1], 25)
