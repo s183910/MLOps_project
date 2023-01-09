@@ -2,7 +2,7 @@ from torch import nn, utils, optim, save
 import logging
 import torch
 from src.data import SignMNISTDataset
-from model import Initial
+from model import loadSimpleModel
 from torchvision import transforms
 
 def train(lr, output_file):
@@ -13,14 +13,7 @@ def train(lr, output_file):
     trainset = SignMNISTDataset(csv_file='data/raw/sign_mnist_train.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]))
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
     images, _  = next(iter(trainloader))
-    model = nn.Sequential(nn.Linear(images.shape[1], 256),
-                           nn.ReLU(),
-                           nn.Linear(256, 128),
-                           nn.ReLU(),
-                           nn.Linear(128, 64),
-                           nn.ReLU(),
-                           nn.Linear(64, 25),
-                           nn.LogSoftmax(dim=1))
+    model = loadSimpleModel(images.shape[1])
     model.train()
     criterion = nn.NLLLoss()
     optimizer = optim.SGD(model.parameters(), lr=lr)
