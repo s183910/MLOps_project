@@ -1,18 +1,26 @@
-from torch import nn, utils, optim, save
 import logging
+
 import torch
-from src.data import SignMNISTDataset
 from model import loadSimpleModel
+from torch import nn, optim, save, utils
 from torchvision import transforms
+
+from src.data import SignMNISTDataset
+
 
 def train(lr, output_file):
     logger = logging.getLogger(__name__)
-    logger.info(f'Training with learning rate ${lr}')
-    
-    logger.info('Loading training set')
-    trainset = SignMNISTDataset(csv_file='data/raw/sign_mnist_train.csv', transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]))
+    logger.info(f"Training with learning rate ${lr}")
+
+    logger.info("Loading training set")
+    trainset = SignMNISTDataset(
+        csv_file="data/raw/sign_mnist_train.csv",
+        transform=transforms.Compose(
+            [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
+        ),
+    )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
-    images, _  = next(iter(trainloader))
+    images, _ = next(iter(trainloader))
     model = loadSimpleModel(images.shape[1])
     model.train()
     criterion = nn.NLLLoss()
@@ -31,11 +39,13 @@ def train(lr, output_file):
 
             running_loss += loss.item()
         else:
-            logger.info(f"Training finished with loss: ${running_loss/len(trainloader)}")
+            logger.info(
+                f"Training finished with loss: ${running_loss/len(trainloader)}"
+            )
 
     # output trained model state
     save(model.state_dict(), output_file)
 
 
 if __name__ == "__main__":
-    train(0.001, 'models/initial.pth')
+    train(0.001, "models/initial.pth")
