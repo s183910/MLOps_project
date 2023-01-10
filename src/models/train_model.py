@@ -1,17 +1,16 @@
-from torch import nn, utils, optim, save
-import logging
-from src.data import SignMNISTDataset
 from model import SignModel
+from torch import nn, optim, save, utils
 from torchvision import transforms
 import hydra
 from omegaconf import DictConfig
+import logging
+from src.data import SignMNISTDataset
 
 
 @hydra.main(version_base="1.3", config_path='conf', config_name='config.yaml')
 def train(cfg: DictConfig):
 
     logger = logging.getLogger(__name__)
-    logger.info(f"Training with learning rate ${cfg.hyperparameters.lr}")
     logger.info("Loading training set")
 
     trainset = SignMNISTDataset(
@@ -27,9 +26,7 @@ def train(cfg: DictConfig):
     criterion = nn.NLLLoss()
     optimizer = optim.SGD(model.parameters(), lr=cfg.hyperparameters.lr)
 
-    epochs = 2
-
-    for e in range(epochs):
+    for e in range(cfg.hyperparameters.epochs):
         running_loss = 0
         for images, labels in trainloader:
             optimizer.zero_grad()
@@ -40,9 +37,7 @@ def train(cfg: DictConfig):
 
             running_loss += loss.item()
         else:
-            logger.info(
-                f"Training finished with loss: ${running_loss/len(trainloader)}"
-            )
+            logger.info(f"Training finished for epoch no. {e} with loss: {running_loss/len(trainloader)}")
 
     # output trained model state
     save(model.state_dict(),cfg.logger.output_file)
@@ -50,3 +45,6 @@ def train(cfg: DictConfig):
 
 if __name__ == "__main__":
     train()
+    # log.configure("train.log")
+    # with log.log_errors:
+    #     train(0.001, "models/initial.pth")
