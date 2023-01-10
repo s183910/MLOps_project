@@ -3,15 +3,19 @@ import logging
 from src.data import SignMNISTDataset
 from model import SignModel
 from torchvision import transforms
+import hydra
+from omegaconf import DictConfig
 
 
-def train(lr, output_file):
+@hydra.main(version_base="1.3", config_path='conf', config_name='config.yaml')
+def train(cfg: DictConfig):
+
     logger = logging.getLogger(__name__)
-    logger.info(f"Training with learning rate ${lr}")
-
+    logger.info(f"Training with learning rate ${cfg.hyperparameters.lr}")
     logger.info("Loading training set")
+
     trainset = SignMNISTDataset(
-        csv_file="data/raw/sign_mnist_train.csv",
+        csv_file=cfg.data.csv_file,
         transform=transforms.Compose(
             [transforms.ToTensor(), transforms.Normalize(0, 255)]
         ),
@@ -21,7 +25,7 @@ def train(lr, output_file):
     model = SignModel(images.shape[1], 25)
     model.train()
     criterion = nn.NLLLoss()
-    optimizer = optim.SGD(model.parameters(), lr=lr)
+    optimizer = optim.SGD(model.parameters(), lr=cfg.hyperparameters.lr)
 
     epochs = 2
 
@@ -41,8 +45,8 @@ def train(lr, output_file):
             )
 
     # output trained model state
-    save(model.state_dict(), output_file)
+    save(model.state_dict(),cfg.logger.output_file)
 
 
 if __name__ == "__main__":
-    train(0.001, "models/initial.pth")
+    train()
