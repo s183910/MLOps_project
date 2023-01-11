@@ -6,8 +6,17 @@ from omegaconf import DictConfig
 import logging
 from src.data import SignMNISTDataset
 
+# TODO: eval if this is how we integrate wandb or not??
+# import wandb
 
-@hydra.main(version_base="1.3", config_path='conf', config_name='config.yaml')
+# wandb.init(
+#     project="test-project",
+#     entity="mlops_14",
+#     config={"learning_rate": 0.01, "epochs": 5, "batch_size": 64, "dropout": 0.5},
+# )
+
+
+@hydra.main(version_base="1.3", config_path="conf", config_name="config.yaml")
 def train(cfg: DictConfig):
 
     logger = logging.getLogger(__name__)
@@ -15,9 +24,7 @@ def train(cfg: DictConfig):
 
     trainset = SignMNISTDataset(
         csv_file=cfg.data.csv_file,
-        transform=transforms.Compose(
-            [transforms.ToTensor(), transforms.Normalize(0, 255)]
-        ),
+        transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 255)]),
     )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
     images, _ = next(iter(trainloader))
@@ -37,10 +44,12 @@ def train(cfg: DictConfig):
 
             running_loss += loss.item()
         else:
-            logger.info(f"Training finished for epoch no. {e} with loss: {running_loss/len(trainloader)}")
+            logger.info(
+                f"Training finished for epoch no. {e} with loss: {running_loss/len(trainloader)}"
+            )
 
     # output trained model state
-    save(model.state_dict(),cfg.logger.output_file)
+    save(model.state_dict(), cfg.logger.output_file)
 
 
 if __name__ == "__main__":
