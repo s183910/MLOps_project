@@ -1,5 +1,5 @@
 from model import SignModel
-from torch import nn, optim, save, utils
+from torch import nn, optim, save, utils, jit
 from torchvision import transforms
 import hydra
 from omegaconf import DictConfig
@@ -14,7 +14,7 @@ def train(cfg: DictConfig):
     logger.info("Loading training set")
 
     trainset = SignMNISTDataset(
-        csv_file=cfg.data.csv_file,
+        csv_file=cfg.data_folder.mnist_train,
         transform=transforms.Compose(
             [transforms.ToTensor(), transforms.Normalize(0, 255)]
         ),
@@ -40,7 +40,10 @@ def train(cfg: DictConfig):
             logger.info(f"Training finished for epoch no. {e} with loss: {running_loss/len(trainloader)}")
 
     # output trained model state
-    save(model.state_dict(),cfg.logger.output_file)
+    torch_script = jit.script(model)
+    torch_script.save("models/initial_jit.pt")
+
+    save(model.state_dict(), "models/initial.pth")
 
 
 if __name__ == "__main__":
