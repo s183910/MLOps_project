@@ -14,7 +14,7 @@ def train(cfg: DictConfig):
     logger.info("Loading training set")
 
     trainset = SignMNISTDataset(
-        csv_file=cfg.data_folder.mnist_train,
+        csv_file="data/raw/sign_mnist_train.csv",
         transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 255)]),
     )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
@@ -43,7 +43,7 @@ def train(cfg: DictConfig):
     torch_script = jit.script(model)
     torch_script.save("models/initial_jit.pt")
 
-    save(model.state_dict(),  "models/initial.pth")
+    save(model.state_dict(), "models/initial.pth")
 
 
 if __name__ == "__main__":
