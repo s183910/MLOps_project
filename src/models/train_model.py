@@ -43,7 +43,7 @@ def train(cfg: DictConfig):
     torch_script = jit.script(model)
     torch_script.save("models/initial_jit.pt")
 
-    save(model.state_dict(),  "models/initial.pth")
+    save(model.state_dict(), "models/initial.pth")
 
 
 if __name__ == "__main__":
