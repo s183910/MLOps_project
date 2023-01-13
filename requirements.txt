@@ -22,6 +22,5 @@ black
 
 mypy
 
-hydra
 omegaconf
 wandb
