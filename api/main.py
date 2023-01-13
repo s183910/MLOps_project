@@ -1,71 +1,51 @@
-from fastapi import FastAPI, UploadFile, File, FileResponse
-from http import HTTPStatus
-from enum import Enum
-from typing import Optional
-import cv2 
+import ray
+from ray import serve
+from fastapi import FastAPI, UploadFile, File
+
+import torch
+from torchvision import transforms
+from torchvision.models import resnet18
+from PIL import Image
+
+from io import BytesIO
 
 app = FastAPI()
+ray.init(address="auto")
+serve.start(detached=True)
 
-@app.get("/")
-def root():
-    """ Health check."""
-    response = {
-        "message": HTTPStatus.OK.phrase,
-        "status-code": HTTPStatus.OK,
-    }
-    return response
+@serve.deployment
+@serve.ingress(app)
+class ModelServer:
+  def __init__(self):
+    self.count = 0
+    self.model = torch.jit.load('models/initial.pt')
+    self.model.eval()
 
-@app.get("/")
-def read_root():
-   return {"Hello": "World"}
+    return
+    self.preprocessor = transforms.Compose([
+        transforms.Resize(224),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+    ])
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int):
-   return {"item_id": item_id}
+  def classify(self, image_payload_bytes):
+    pil_image = Image.open(BytesIO(image_payload_bytes))
 
-class ItemEnum(Enum):
-   alexnet = "alexnet"
-   resnet = "resnet"
-   lenet = "lenet"
+    pil_images = [pil_image]  #batch size is one
+    input_tensor = torch.cat(
+        [self.preprocessor(i).unsqueeze(0) for i in pil_images])
 
-@app.get("/restric_items/{item_id}")
-def read_item(item_id: ItemEnum):
-   return {"item_id": item_id}
+    with torch.no_grad():
+        output_tensor = self.model(input_tensor)
+    return {"class_index": int(torch.argmax(output_tensor[0]))}
 
-@app.get("/query_items")
-def read_item(item_id: int):
-   return {"item_id": item_id}
+  @app.get("/")
+  def get(self):
+    return "Welcome to the PyTorch model server."
 
-@app.get("/query_model")
-def read_item(item_id: ItemEnum):
-   return {"item_id": item_id}
+  @app.post("/classify_image")
+  async def classify_image(self, file: UploadFile = File(...)):
+    image_bytes = await file.read()
+    return self.classify(image_bytes)
 
-
-database = {'username': [ ], 'password': [ ]}
-
-@app.post("/login/")
-def login(username: str, password: str):
-   username_db = database['username']
-   password_db = database['password']
-   if username not in username_db and password not in password_db:
-      with open('api/database.csv', "a") as file:
-            file.write(f"{username}, {password} \n")
-      username_db.append(username)
-      password_db.append(password)
-   return "login saved"
-
-@app.post("/cv_model/")
-async def cv_model(data: UploadFile = File(...), w: Optional[int] = 28, h: Optional[int] = 28):
-   
-   img = await cv2.imread("api/sign_png/sign_test_i.png")
-   img = cv2.resize(img, (h, w))
-   cv2.imwrite('image_resize.jpg', img)
-   
-   FileResponse('api/sign_png/sign_test_i_resized.png')
-
-   response = {
-      "input": data,
-      "message": HTTPStatus.OK.phrase,
-      "status-code": HTTPStatus.OK,
-   }
-   return response
+ModelServer.deploy()
