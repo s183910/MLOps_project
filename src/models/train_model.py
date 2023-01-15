@@ -21,7 +21,7 @@ def train(cfg: DictConfig):
     images, _ = next(iter(trainloader))
     model = SignModel(images.shape[1], 25)
     model.train()
-    criterion = nn.NLLLoss()
+    criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=cfg.hyperparameters.lr)
 
     for e in range(cfg.hyperparameters.epochs):
