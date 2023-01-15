@@ -3,7 +3,7 @@ hyperparameters:
   lr: 0.002
   epochs: 5
 logger:
-  output_file: "models/initial.pth"
+  output_file: "models/trained_model.pth"
 data:
   csv_file: "data/raw/sign_mnist_train.csv"
 

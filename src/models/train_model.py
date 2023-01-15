@@ -45,6 +45,3 @@ def train(cfg: DictConfig):
 
 if __name__ == "__main__":
     train()
-    # log.configure("train.log")
-    # with log.log_errors:
-    #     train(0.001, "models/initial.pth")
