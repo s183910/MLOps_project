@@ -152,3 +152,12 @@ predict:
 test:
 	coverage run -m pytest tests/
 
+docker-train:
+	docker run --name trainer -v $(pwd)/models:/models/ trainer:latest
+
+docker-predict:
+	docker run --name predict --rm \
+    -v $(pwd)/models/trained_model.pt:/models/trained_model.pt \
+    predict:latest
+
+
