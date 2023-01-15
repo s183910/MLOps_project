@@ -61,6 +61,4 @@ class SignMNISTDataset(torch.utils.data.Dataset):
         images = images.astype(np.float32)
         if self.transform:
             images = self.transform(images).reshape(-1)
-        images = images.reshape(28, 28)
-        images = torch.stack([images, images, images])
         return images, labels
