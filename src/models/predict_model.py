@@ -1,10 +1,10 @@
 import torch
 from model import SignModel
-from pelutils import log
 from torchvision import transforms
 
 from src.data import SignMNISTDataset
-
+import logging
+import click
 
 def evaluate(checkpoint: str) -> None:
     """
@@ -16,7 +16,8 @@ def evaluate(checkpoint: str) -> None:
     Returns:
         :rtype: None
     """
-    log("Loading test set")
+    logger = logging.getLogger(__name__)
+    logger.info("Loading test set")
     testset = SignMNISTDataset(
         csv_file="data/raw/sign_mnist_test.csv",
         transform=transforms.Compose(
@@ -42,10 +43,11 @@ def evaluate(checkpoint: str) -> None:
             results.append(equals.type(torch.FloatTensor).reshape(-1))
         else:
             accuracy = torch.mean(torch.concat(results))
-            log(f"Accuracy: {accuracy.item()*100} %")
+            print(f"Accuracy: {accuracy.item()*100} %")
 
 
+@click.command()
+@click.argument("input_filepath", type=click.Path(exists=True))
 if __name__ == "__main__":
-    log.configure("train.log")
-    with log.log_errors:
-        evaluate("models/initial.pth")
+    evaluate("../../models/trained_model.pth")
+
