@@ -5,41 +5,62 @@ from torchvision import transforms
 import numpy as np
 import cv2
 from PIL import Image
+from io import BytesIO
 
-def preprocess_image(image_path):
-    image = cv2.imread(image_path)
-    image = cv2.resize(image, (28,28))    
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)     
+class APIModelHandler:
+    """ Used for preprocessing and classifying images POSTed to the API. """
 
-    image_np = np.array(image, dtype=np.float32)
-    image_np = image_np / 255.0
-    image_np = image_np.reshape((784,1))
-    image_tensor = torch.from_numpy(image_np).T
+    def __init__(self):
+        state_dict = torch.load("models/initial.pth")
+        self.model = SignModel(784,25)
+        self.model.load_state_dict(state_dict)
+        self.model.eval()
 
-    return image_tensor
+    def preprocess_image(self, file, from_path = False):
+        """ Preprocesses an image to be classified by the model. """
+        
+        if from_path:
+            image = Image.open(file)
+        else:
+            image = Image.open(file.file)
+            image.save('api/sign_png/postimage2.png')
 
-def predict_img(input_paths):
+        try:
+            image = image.resize((28,28))
+            image = image.convert('L')
+        except:
+            print("Error resizing image and converting to grayscale.")
+            return None
 
-    tensors = torch.tensor([])
+        image_np = np.array(image, dtype=np.float32)
+        image_np = image_np / 255.0
+        image_np = image_np.reshape((784,1))
+        image_tensor = torch.from_numpy(image_np).T
+        
+        return image_tensor
 
-    for input_path in input_paths:        
-        img_tensor = preprocess_image(input_path)
-        tensors = torch.cat((tensors, img_tensor), 0)
+    def classify(self, images, from_path = False):
 
-    state_dict = torch.load("models/initial.pth")
-    model = SignModel(784,25)
-    model.load_state_dict(state_dict)
-    model.eval()
-    
-    with torch.no_grad():
-            outputs = model.forward(tensors)
-            outputs = torch.exp(outputs)
-            outputs = outputs.topk(1, dim=1).indices.flatten().tolist()
-            # print(outputs.indices)
-            # # outputs = [output[1].item() for output in outputs]
-            
-    return outputs
+        tensors = torch.tensor([])
+
+        for image in images:
+            tensor = self.preprocess_image(image, from_path=from_path)
+            if tensor is None:
+                return None
+            tensors = torch.cat((tensors, tensor), 0)    
+        
+        with torch.no_grad():
+                outputs = self.model.forward(tensors)
+                outputs = torch.exp(outputs)
+                outputs = outputs.topk(1, dim=1).indices.flatten().tolist()
+                # print(outputs.indices)
+                # # outputs = [output[1].item() for output in outputs]
+                
+        return outputs
 
 
 if __name__ == "__main__":
-    print(predict_img(["api/sign_png/sign_test_i.png", "api/sign_png/sign_test_a.png"]))
+
+    model = APIModelHandler()
+    classes = model.classify(["api/sign_png/sign_test_a.png"], from_path = True)
+    print(classes)
