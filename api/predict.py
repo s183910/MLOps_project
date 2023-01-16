@@ -1,11 +1,7 @@
 import torch
-from src.models.model import SignModel
-from pelutils import log
-from torchvision import transforms
+from model import SignModel
 import numpy as np
-import cv2
 from PIL import Image
-from io import BytesIO
 
 class APIModelHandler:
     """ Used for preprocessing and classifying images POSTed to the API. """
@@ -23,7 +19,7 @@ class APIModelHandler:
             image = Image.open(file)
         else:
             image = Image.open(file.file)
-            image.save('api/sign_png/postimage2.png')
+            image.save('api/test_images/postimage.png')
 
         try:
             image = image.resize((28,28))
@@ -41,6 +37,8 @@ class APIModelHandler:
 
     def classify(self, images, from_path = False):
 
+        alphabet = {0:"a", 1:"b", 2:"c", 3:"d", 4:"e", 5:"f", 6:"g", 7:"h", 8:"i", 9:"j", 10:"k", 11:"l", 12:"m", 13:"n", 14:"o", 15:"p", 16:"q", 17:"r", 18:"s", 19:"t", 20:"u", 21:"v", 22:"w", 23:"x", 24:"y"}
+        
         tensors = torch.tensor([])
 
         for image in images:
@@ -53,14 +51,13 @@ class APIModelHandler:
                 outputs = self.model.forward(tensors)
                 outputs = torch.exp(outputs)
                 outputs = outputs.topk(1, dim=1).indices.flatten().tolist()
-                # print(outputs.indices)
-                # # outputs = [output[1].item() for output in outputs]
-                
-        return outputs
+                characters = [alphabet[output] for output in outputs]
+
+        return characters
 
 
 if __name__ == "__main__":
 
     model = APIModelHandler()
-    classes = model.classify(["api/sign_png/sign_test_a.png"], from_path = True)
+    classes = model.classify(["api/test_images/sign_test_a.png"], from_path = True)
     print(classes)

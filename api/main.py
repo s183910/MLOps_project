@@ -1,9 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 from http import HTTPStatus
-from enum import Enum
-from typing import Optional
-from api.predict import APIModelHandler
-from PIL import Image
+from predict import APIModelHandler
+from typing import List
 
 app = FastAPI()
 
@@ -21,9 +19,10 @@ def read_root():
    return {"Hello": "World"}
 
 @app.post("/upload_img/")
-async def create_upload_file(file: UploadFile = File(...)):
+async def create_upload_file(files: List[UploadFile] = File(...)):
    
-   model = APIModelHandler()
-   prediction = model.classify([file])
 
-   return {"filename": file.filename, "prediction": prediction}
+   model = APIModelHandler()
+   clasifications = model.classify(files)
+
+   return {"files": [file.filename for file in files], "classifications": clasifications}
