@@ -1,6 +1,6 @@
 functions-framework==3.*
 torch
-PIL
+Pillow
 numpy
 http
 fastai
