@@ -1,5 +1,4 @@
 from fastapi import FastAPI, UploadFile, File
-from http import HTTPStatus
 from predict import APIModelHandler
 from typing import List
 
@@ -9,8 +8,8 @@ app = FastAPI()
 def root():
     """ Health check."""
     response = {
-        "message": HTTPStatus.OK.phrase,
-        "status-code": HTTPStatus.OK,
+        "message": "OK",
+        "status-code": 200,
     }
     return response
 
