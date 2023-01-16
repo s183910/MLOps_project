@@ -6,20 +6,31 @@ from omegaconf import DictConfig
 import logging
 from src.data import SignMNISTDataset
 
+import wandb
 
-@hydra.main(version_base="1.3", config_path="conf", config_name="config.yaml")
+
+@hydra.main(version_base="1.3", config_path="conf/", config_name="config.yaml")
 def train(cfg: DictConfig):
 
     logger = logging.getLogger(__name__)
     logger.info("Loading training set")
 
+    wandb.init(
+        project="Very awesome sign project",
+        entity="mlops_14",
+        config=cfg,
+    )
+
     trainset = SignMNISTDataset(
-        csv_file="data/raw/sign_mnist_train.csv",
+        csv_file=cfg.data_folder.mnist_train,
         transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 255)]),
     )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
     images, _ = next(iter(trainloader))
     model = SignModel(images.shape[1], 25)
+
+    wandb.watch(model, log_freq=100)
+
     model.train()
     criterion = nn.NLLLoss()
     optimizer = optim.SGD(model.parameters(), lr=cfg.hyperparameters.lr)
@@ -34,6 +45,7 @@ def train(cfg: DictConfig):
             optimizer.step()
 
             running_loss += loss.item()
+            wandb.log({"loss": loss})
         else:
             logger.info(
                 f"Training finished for epoch no. {e} with loss: {running_loss/len(trainloader)}"
