@@ -1,0 +1,8 @@
+---
+setup:
+    project: test-project
+    entity: mlops_14
+    mode: online
+watch:
+    log: all
+    log_freq: 100
