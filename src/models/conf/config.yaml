@@ -1,9 +1,7 @@
-#config.yaml
 hyperparameters:
   lr: 0.002
-  epochs: 5
-logger:
-  output_file: "models/trained_model.pth"
-data:
-  csv_file: "data/raw/sign_mnist_train.csv"
+  epochs: 10
+data_folder:
+  mnist_train: "data/raw/sign_mnist_train.csv"
+  mnist_test: "data/raw/sign_mnist_test.csv"
 

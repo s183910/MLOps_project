@@ -22,3 +22,6 @@ isort
 black
 
 mypy
+
+omegaconf
+wandb
