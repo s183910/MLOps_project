@@ -17,3 +17,8 @@ repos:
     hooks:
     -   id: isort
         name: isort (python)
+-   repo: https://github.com/pycqa/flake8
+    rev: '5e99de7209fc5278c73d242dfd27522a924ff8f6'
+    hooks:
+    -   id: flake8
+        exclude: ^docs
