@@ -26,3 +26,5 @@ mypy
 omegaconf
 wandb
 hydra-core
+
+evidently
