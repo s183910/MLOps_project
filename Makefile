@@ -151,4 +151,3 @@ predict:
 
 test:
 	coverage run -m pytest tests/
-
