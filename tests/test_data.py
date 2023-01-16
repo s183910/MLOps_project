@@ -4,10 +4,9 @@ import pytest
 from torch import utils
 from torchvision import transforms
 
+import wandb
 from src.data import SignMNISTDataset
 from tests import PATH_DATA
-
-import wandb
 
 
 def load_dataset(path, n, shape_of_record):
@@ -17,12 +16,8 @@ def load_dataset(path, n, shape_of_record):
         len(dataset) == n
     ), f"Dataset did not have the correct number of samples: {len(dataset)} != {n}"
     images, labels = next(iter(dataloader))
-    image_shape_error = (
-        f"Data feature set: expected shape {shape_of_record}, but got shape {images.shape}"
-    )
-    label_shape_error = (
-        f"Data feature set: expected shape [{shape_of_record[0]}], but got shape {labels.shape}"
-    )
+    image_shape_error = f"Data feature set: expected shape {shape_of_record}, but got shape {images.shape}"
+    label_shape_error = f"Data feature set: expected shape [{shape_of_record[0]}], but got shape {labels.shape}"
     assert (
         images.shape[0] == shape_of_record[0] and images.shape[1] == shape_of_record[1]
     ), image_shape_error
@@ -60,9 +55,7 @@ def test_batched_data_loader():
     dataloader = utils.data.DataLoader(dataset, batch_size=batch_size)
     images, labels = next(iter(dataloader))
     expected_shape = [batch_size, 784]
-    image_shape_error = (
-        f"Data feature set: expected shape {expected_shape}, but got shape {images.shape}"
-    )
+    image_shape_error = f"Data feature set: expected shape {expected_shape}, but got shape {images.shape}"
     label_shape_error = (
         f"Data feature set: expected shape [{batch_size}], but got shape {labels.shape}"
     )

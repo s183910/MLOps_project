@@ -1,13 +1,13 @@
+import logging
+from pathlib import Path
+
+import click
 import torch
+from dotenv import find_dotenv, load_dotenv
 from model import SignModel
 from torchvision import transforms
 
 from src.data import SignMNISTDataset
-import logging
-import click
-
-from dotenv import find_dotenv, load_dotenv
-from pathlib import Path
 
 
 @click.command()
@@ -54,7 +54,6 @@ def evaluate(input_filepath: str, checkpoint: str) -> None:
             print(f"Accuracy: {accuracy.item()*100} %")
 
 
-
 if __name__ == "__main__":
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     logging.basicConfig(level=logging.INFO, format=log_fmt)
@@ -66,4 +65,3 @@ if __name__ == "__main__":
     # load up the .env entries as environment variables
     load_dotenv(find_dotenv())
     evaluate()
-
