@@ -4,4 +4,4 @@ Pillow
 numpy
 http
 fastai
-request
+requests
