@@ -15,6 +15,7 @@ pelutils
 pytest
 coverage
 pytest-cov
+hydra-core
 
 flake8
 isort

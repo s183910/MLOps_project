@@ -147,8 +147,23 @@ train:
 	python3 src/models/train_model.py
 
 predict:
-	python3 src/models/predict_model.py
+	python3 src/models/predict_model.py $(INPUT_FILEPATH) $(CHECKPOINT)
 
 test:
 	coverage run -m pytest tests/
+
+build-docker-train:
+	docker build -f trainer.dockerfile . -t trainer:latest
+
+build-docker-predict:
+	docker build -f predict.dockerfile . -t predict:latest
+
+docker-train:
+	docker run --name trainer -v $(pwd)/models:/models/ trainer:latest
+
+docker-predict:
+	docker run --name predict --rm \
+    -v $(pwd)/models:/models \
+    predict:latest data/raw/sign_mnist_test.csv models/trained_model.pth
+
 

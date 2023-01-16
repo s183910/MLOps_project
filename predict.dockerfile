@@ -10,6 +10,9 @@ COPY requirements.txt requirements.txt
 COPY setup.py setup.py
 COPY src/ src/
 COPY data/ data/
+
+WORKDIR /
+
 RUN mkdir models
 
 RUN pip install -r requirements.txt --no-cache-dir

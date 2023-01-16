@@ -1,12 +1,13 @@
-from model import SignModel
-from torch import nn, optim, save, utils, jit
-from torchvision import transforms
-import hydra
-from omegaconf import DictConfig
 import logging
-from src.data import SignMNISTDataset
+
+import hydra
+from model import SignModel
+from omegaconf import DictConfig
+from torch import jit, nn, optim, save, utils
+from torchvision import transforms
 
 import wandb
+from src.data import SignMNISTDataset
 
 
 @hydra.main(version_base="1.3", config_path="conf/", config_name="config.yaml")
@@ -23,7 +24,9 @@ def train(cfg: DictConfig):
 
     trainset = SignMNISTDataset(
         csv_file=cfg.data_folder.mnist_train,
-        transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 255)]),
+        transform=transforms.Compose(
+            [transforms.ToTensor(), transforms.Normalize(0, 255)]
+        ),
     )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
     images, _ = next(iter(trainloader))
@@ -60,6 +63,3 @@ def train(cfg: DictConfig):
 
 if __name__ == "__main__":
     train()
-    # log.configure("train.log")
-    # with log.log_errors:
-    #     train(0.001, "models/initial.pth")
