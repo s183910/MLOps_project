@@ -6,24 +6,23 @@ from omegaconf import DictConfig
 import logging
 from src.data import SignMNISTDataset
 
-# TODO: eval if this is how we integrate wandb or not??
 import wandb
 
-wandb.init(
-    project="test-project",
-    entity="mlops_14",
-    config={"learning_rate": 0.01, "epochs": 5, "batch_size": 64, "dropout": 0.5},
-)
 
-
-@hydra.main(version_base="1.3", config_path=".", config_name="config.yaml")
+@hydra.main(version_base="1.3", config_path="conf/", config_name="config.yaml")
 def train(cfg: DictConfig):
 
     logger = logging.getLogger(__name__)
     logger.info("Loading training set")
 
+    wandb.init(
+        project="Very awesome sign project",
+        entity="mlops_14",
+        config=cfg,
+    )
+
     trainset = SignMNISTDataset(
-        csv_file=cfg.data.csv_file,
+        csv_file=cfg.data_folder.mnist_train,
         transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 255)]),
     )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)

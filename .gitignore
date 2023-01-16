@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 output*
+wandb/
 
 # C extensions
 *.so
