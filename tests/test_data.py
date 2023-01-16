@@ -4,7 +4,6 @@ import pytest
 from torch import utils
 from torchvision import transforms
 
-import wandb
 from src.data import SignMNISTDataset
 from tests import PATH_DATA
 
