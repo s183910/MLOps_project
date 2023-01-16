@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+output*
 
 # C extensions
 *.so
@@ -78,6 +79,7 @@ target/
 # exclude data from source control by default
 /data/
 /models/
+/outputs/
 
 # Mac OS-specific storage files
 .DS_Store

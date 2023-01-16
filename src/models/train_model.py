@@ -1,5 +1,5 @@
 from model import SignModel
-from torch import nn, optim, save, utils
+from torch import nn, optim, save, utils, jit
 from torchvision import transforms
 import hydra
 from omegaconf import DictConfig
@@ -16,7 +16,7 @@ wandb.init(
 )
 
 
-@hydra.main(version_base="1.3", config_path="configs_kat/", config_name="defaults")
+@hydra.main(version_base="1.3", config_path=".", config_name="config.yaml")
 def train(cfg: DictConfig):
 
     logger = logging.getLogger(__name__)
@@ -53,7 +53,10 @@ def train(cfg: DictConfig):
             )
 
     # output trained model state
-    save(model.state_dict(), cfg.logger.output_file)
+    torch_script = jit.script(model)
+    torch_script.save("models/initial_jit.pt")
+
+    save(model.state_dict(), "models/initial.pth")
 
 
 if __name__ == "__main__":
