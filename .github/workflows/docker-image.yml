@@ -2,29 +2,17 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ master ]
 
 jobs:
-  login:
-    runs-on: ubuntu-latest
-    steps:
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    
+    - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file trainer.dockerfile \
-          --tag docker.io/$/$:$GITHUB_SHA
-        docker build . --file predict.dockerfile \
+      run: |
+        echo ${{secrets.DOCKER_HUB_TOKEN}} | docker login \
+          -u ${{secrets.DOCKER_HUB_USERNAME}} --password-stdin docker.io
+        docker build . --file trainer.dockerfile \
           --tag docker.io/$/$:$GITHUB_SHA
         docker push docker.io/$/$:$GITHUB_SHA
