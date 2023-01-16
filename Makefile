@@ -158,13 +158,12 @@ build-docker-train:
 build-docker-predict:
 	docker build -f predict.dockerfile . -t predict:latest
 
-
 docker-train:
 	docker run --name trainer -v $(pwd)/models:/models/ trainer:latest
 
 docker-predict:
 	docker run --name predict --rm \
-    -v $(pwd)/models/trained_model.pt:/models/trained_model.pt \
-    predict:latest
+    -v $(pwd)/models:/models \
+    predict:latest data/raw/sign_mnist_test.csv models/trained_model.pth
 
 
