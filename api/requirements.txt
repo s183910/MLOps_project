@@ -1,5 +1,5 @@
 functions-framework==3.*
-torch
+https://download.pytorch.org/whl/cpu/torch-0.3.0.post4-cp27-cp27m-linux_x86_64.whl
 Pillow
 numpy
 fastapi
