@@ -25,3 +25,5 @@ async def create_upload_file(files: List[UploadFile] = File(...)):
    clasifications = model.classify(files)
 
    return {"files": [file.filename for file in files], "classifications": clasifications}
+
+

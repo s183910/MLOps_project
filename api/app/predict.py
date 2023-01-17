@@ -7,7 +7,7 @@ class APIModelHandler:
     """ Used for preprocessing and classifying images POSTed to the API. """
 
     def __init__(self):
-        state_dict = torch.load("models/initial.pth")
+        state_dict = torch.load("initial.pth")
         self.model = SignModel(784,25)
         self.model.load_state_dict(state_dict)
         self.model.eval()
@@ -19,7 +19,7 @@ class APIModelHandler:
             image = Image.open(file)
         else:
             image = Image.open(file.file)
-            image.save('api/test_images/postimage.png')
+            image.save('test_images/postimage.png')
 
         try:
             image = image.resize((28,28))
@@ -59,5 +59,5 @@ class APIModelHandler:
 if __name__ == "__main__":
 
     model = APIModelHandler()
-    classes = model.classify(["api/test_images/sign_test_a.png"], from_path = True)
+    classes = model.classify(["test_images/sign_test_a.png"], from_path = True)
     print(classes)

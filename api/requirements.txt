@@ -1,5 +1,5 @@
-functions-framework==3.*
-https://download.pytorch.org/whl/cpu/torch-1.10.2%2Bcpu-cp39-cp39-linux_x86_64.whl
+uvicorn
 Pillow
 numpy
 fastapi
+torch
