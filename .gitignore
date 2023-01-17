@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 output*
 wandb/
+*.html
 
 # C extensions
 *.so
