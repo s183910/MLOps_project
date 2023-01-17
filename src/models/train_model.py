@@ -35,7 +35,7 @@ def train(cfg: DictConfig):
     wandb.watch(model, log_freq=100)
 
     model.train()
-    criterion = nn.NLLLoss()
+    criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=cfg.hyperparameters.lr)
 
     for e in range(cfg.hyperparameters.epochs):
