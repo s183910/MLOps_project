@@ -1,5 +1,6 @@
 import logging
 
+import torch.profiler as profiler
 import hydra
 from model import SignModel
 from omegaconf import DictConfig
@@ -35,24 +36,32 @@ def train(cfg: DictConfig):
     wandb.watch(model, log_freq=100)
 
     model.train()
-    criterion = nn.NLLLoss()
+    criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=cfg.hyperparameters.lr)
 
-    for e in range(cfg.hyperparameters.epochs):
-        running_loss = 0
-        for images, labels in trainloader:
-            optimizer.zero_grad()
-            logits = model(images)
-            loss = criterion(logits, labels)
-            loss.backward()
-            optimizer.step()
+    with profiler.profile(
+        activities=[profiler.ProfilerActivity.CPU],
+        record_shapes=True,
+        on_trace_ready=profiler.tensorboard_trace_handler("./outputs/tensorprofilebrrr"),
+    ) as prof:
+        for e in range(cfg.hyperparameters.epochs):
+            logging.info("Epooch %i / %i" % (e + 1, cfg.hyperparameters.epochs))
+            running_loss = 0
+            for i, (images, labels) in enumerate(trainloader):
+                logging.debug("Batch %i / %i" % (i + 1, len(trainloader)))
+                optimizer.zero_grad()
+                logits = model(images)
+                loss = criterion(logits, labels)
+                loss.backward()
+                optimizer.step()
 
-            running_loss += loss.item()
-            wandb.log({"loss": loss})
-        else:
-            logger.info(
-                f"Training finished for epoch no. {e} with loss: {running_loss/len(trainloader)}"
-            )
+                running_loss += loss.item()
+                wandb.log({"loss": loss})
+                prof.step()
+            else:
+                logger.info(
+                    f"Training finished for epoch no. {e} with loss: {running_loss/len(trainloader)}"
+                )
 
     # output trained model state
     torch_script = jit.script(model)

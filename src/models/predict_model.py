@@ -23,7 +23,6 @@ def evaluate(input_filepath: str, checkpoint: str) -> None:
     Returns:
         :rtype: None
     """
-    checkpoint = "models/trained_model.pth"
     logger = logging.getLogger(__name__)
     logger.info("Loading test set")
     testset = SignMNISTDataset(
