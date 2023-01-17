@@ -131,6 +131,7 @@ s183910, s183898, s222955, s183912
 
 <!-- TODO -->
 We used PyTorch for implementing our model and training and inference.
+<!-- From the Pytorch ecosystem we used one of the Pytorch Image models named MobileNet-V2. -->
 
 ## Coding environment
 
@@ -232,7 +233,10 @@ Further, we linted the code with `flake8`.
 >
 > Answer:
 
---- question 9 fill here ---
+<!-- TODO: maybe add more here-->
+We made use of both branches and pull requests during our project work. We created new branches as we needed them for testing and implementing specific features, followed by creating a pull request for merging the feature branch into the main branch, once the new feature was complete.
+
+
 
 ### Question 10
 
@@ -314,7 +318,18 @@ Further, we linted the code with `flake8`.
 >
 > Answer:
 
---- question 14 fill here ---
+
+```markdown
+![Weights and biases figure](figures/wandb.png)
+```
+```markdown
+![Bucket](figures/bucket.png)
+```
+```markdown
+![Build](figures/build.png)
+```
+
+<!-- TODO: replace the images above with our images-->
 
 ### Question 15
 
@@ -361,7 +376,8 @@ Further, we linted the code with `flake8`.
 >
 > Answer:
 
---- question 17 fill here ---
+<!-- TODO finish this -->
+We made use of the following services on google cloud platform: Vertex AI, Bucket, ... .
 
 ### Question 18
 
@@ -385,7 +401,8 @@ Further, we linted the code with `flake8`.
 >
 > Answer:
 
---- question 19 fill here ---
+<!-- TODO write about this and maybe replace the image. -->
+[Our buckets](figures/bucket_ours.png).
 
 ### Question 20
 
@@ -403,7 +420,8 @@ Further, we linted the code with `flake8`.
 >
 > Answer:
 
---- question 21 fill here ---
+<!-- TODO write about this and maybe replace the image. -->
+[Our GCP cloud build history](figures/build_ours.png).
 
 ### Question 22
 
