@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
-from predict import APIModelHandler
+from app.predict import APIModelHandler
 from typing import List
 
 app = FastAPI()

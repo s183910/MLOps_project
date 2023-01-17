@@ -1,5 +1,5 @@
 import torch
-from model import SignModel
+from app.model import SignModel
 import numpy as np
 from PIL import Image
 
