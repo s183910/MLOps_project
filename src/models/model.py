@@ -12,7 +12,7 @@ class SignModel(nn.Module):
     def __init__(self, input_size: int, output_size: int):
         super().__init__()
         # self._resnet = resnet18(ResNet18_Weights.DEFAULT)
-        self._mobilenet = torch.hub.load('pytorch/vision:v0.10.0', 'mobilenet_v3_small', pretrained=True)
+        self._mobilenet = torch.hub.load('pytorch/vision:v0.10.0', 'mobilenet_v2', pretrained=True)
         # self._module = nn.Sequential(*self._build_layers(1000, output_size))
         self._module = nn.Linear(1000, output_size)
 

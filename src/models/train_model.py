@@ -43,6 +43,7 @@ def train(cfg: DictConfig):
         running_loss = 0
         for i, (images, labels) in enumerate(trainloader):
             logging.debug("Batch %i / %i" % (i + 1, len(trainloader)))
+            print("Batch %i / %i" % (i + 1, len(trainloader)))
             optimizer.zero_grad()
             logits = model(images)
             loss = criterion(logits, labels)
