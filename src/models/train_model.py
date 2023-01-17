@@ -39,8 +39,10 @@ def train(cfg: DictConfig):
     optimizer = optim.SGD(model.parameters(), lr=cfg.hyperparameters.lr)
 
     for e in range(cfg.hyperparameters.epochs):
+        logging.info("Epooch %i / %i" % (e + 1, cfg.hyperparameters.epochs))
         running_loss = 0
-        for images, labels in trainloader:
+        for i, (images, labels) in enumerate(trainloader):
+            logging.debug("Batch %i / %i" % (i + 1, len(trainloader)))
             optimizer.zero_grad()
             logits = model(images)
             loss = criterion(logits, labels)
