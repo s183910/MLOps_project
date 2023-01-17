@@ -49,7 +49,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 1 fill here ---
+14
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -60,7 +60,7 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 2 fill here ---
+s183910, s183898, s222955, s183912
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -73,7 +73,8 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 3 fill here ---
+<!-- TODO -->
+We used PyTorch for implementing our model and training and inference.
 
 ## Coding environment
 
@@ -92,7 +93,10 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 4 fill here ---
+<!-- TODO: Done, just double check docker commands -->
+We used `pipreqs` for generating a dependency list with exact versions.
+Development libraries, such as `pytest` were manually maintained in `requirements.txt`.
+To obtain a complete copy of the development environments, build the docker images using `docker build -f predict.dockerfile . -t predict:latest` for inference and `docker build -f train.dockerfile . -t train:latest`.
 
 ### Question 5
 
@@ -107,7 +111,10 @@ be installed with `pip install click markdown`.
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+The project is structured using the cookiecutter data science template.
+We filled in `predict_model.py` and `train_model.py`, and we added some extra utility files, e.g. `src/data/__init__.py`, which builds the dataset.
+We did not fill in `make_dataset.py`, as the the data requires little preprocessing, which is done at runtime.
+`visualize.py` was also not filled out, as we did the main visualization on wandb.
 
 ### Question 6
 
@@ -118,7 +125,9 @@ be installed with `pip install click markdown`.
 >
 > Answer:
 
---- question 6 fill here ---
+To ensure code similarity, we used the `black` autoformatter.
+This was enforced with a pre-commit git hook that made sure no one would forget to use it.
+Further, we linted the code with `flake8`.
 
 ## Version control
 
