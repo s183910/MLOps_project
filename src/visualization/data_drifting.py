@@ -6,7 +6,6 @@ import pandas as pd
 
 from evidently.test_suite import TestSuite
 from evidently.test_preset import DataStabilityTestPreset
-from evidently.test_preset import DataQualityTestPreset
 
 
 data_frame = pd.read_csv("data/raw/sign_mnist_train.csv")
@@ -20,11 +19,11 @@ data_stability = TestSuite(
     ]
 )
 data_stability.run(
-    current_data=data_frame.iloc[:391], reference_data=data_frame.iloc[391:], column_mapping=None
+    current_data=data_frame.iloc[:300], reference_data=data_frame.iloc[300:], column_mapping=None
 )
-data_stability.save_html("DataDrifting.html")
-with open("DataDrifting.html", "r", encoding="utf-8") as f:
-    html_content = f.read()
+data_stability.save_html("DataStability.html")
+# with open("DataDrifting.html", "r", encoding="utf-8") as f:
+#     html_content = f.read()
 
 
 # from evidently.report import Report
