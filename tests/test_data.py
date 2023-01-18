@@ -4,6 +4,7 @@ import pytest
 from torch import utils
 from torchvision import transforms
 
+import wandb
 from src.data import SignMNISTDataset
 from tests import PATH_DATA
 
@@ -42,6 +43,7 @@ def test_load_test_dataset():
     N_test = 7172
     load_dataset(path, N_test, [1, 784])
 
+
 @pytest.mark.skipif(
     not os.path.exists(os.path.join(PATH_DATA, "raw/sign_mnist_test.csv")),
     reason="Data files not found (testing)",
@@ -54,7 +56,9 @@ def test_batched_data_loader():
     images, labels = next(iter(dataloader))
     expected_shape = [batch_size, 784]
     image_shape_error = f"Data feature set: expected shape {expected_shape}, but got shape {images.shape}"
-    label_shape_error = f"Data feature set: expected shape [{batch_size}], but got shape {labels.shape}"
+    label_shape_error = (
+        f"Data feature set: expected shape [{batch_size}], but got shape {labels.shape}"
+    )
     assert (
         images.shape[0] == expected_shape[0] and images.shape[1] == expected_shape[1]
     ), image_shape_error
