@@ -251,7 +251,9 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
---- question 10 fill here ---
+We saved our data to Google Drive and used DVC to manage it.
+This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving data to a git repository.
+It also allowed us to make sure that everyone had the same data laid out in the same way, which was also useful for pipelines and deployment.
 
 ### Question 11
 
@@ -286,7 +288,7 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
---- question 12 fill here ---
+We used hydra for controlling hyperparameters, as it allows for config files that help control which experiments were run and makes sure that the correct experiments are run.
 
 ### Question 13
 
@@ -301,7 +303,10 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
---- question 13 fill here ---
+Config files are one part of the ansewr, making sure that there is no doubt on the hyperparameters.
+DVC also enables us to ensure that the data would be identical from machine to machine, and Docker allowed us to provide a controlled environment with guaranteed library versions, making sure that no changed behaviour in different libraries would have an effect.
+The only non-reproducibility comes from stochistic processes such as batch shuffling, which we did not control with seeds.
+Even with seeds, PyTorch does not guarantee exactly the same outputs.
 
 ### Question 14
 
