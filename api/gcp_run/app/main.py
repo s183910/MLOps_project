@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 from app.predict import APIModelHandler
 from typing import List
+import uvicorn
 
 app = FastAPI()
 
@@ -25,5 +26,4 @@ async def create_upload_file(files: List[UploadFile] = File(...)):
    clasifications = model.classify(files)
 
    return {"files": [file.filename for file in files], "classifications": clasifications}
-
 
