@@ -4,4 +4,5 @@ uvicorn
 Pillow
 numpy
 fastapi
-torch
+-f https://download.pytorch.org/whl/torch_stable.html
+torch==1.12.1+cpu
