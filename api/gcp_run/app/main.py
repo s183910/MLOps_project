@@ -14,10 +14,6 @@ def root():
     }
     return response
 
-@app.get("/")
-def read_root():
-   return {"Hello": "World"}
-
 @app.post("/upload_img/")
 async def create_upload_file(files: List[UploadFile] = File(...)):
    
@@ -25,5 +21,7 @@ async def create_upload_file(files: List[UploadFile] = File(...)):
    model = APIModelHandler()
    clasifications = model.classify(files)
 
-   return {"files": [file.filename for file in files], "classifications": clasifications}
+   results = [{"file": file.filename, "classification": classification} for file, classification in zip(files, clasifications)]
+
+   return results
 
