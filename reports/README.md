@@ -369,7 +369,7 @@ We made use of the following services on google cloud platform:
 > *using a custom container: ...*
 >
 > Answer:
-
+<!-- TODO -->
 --- question 18 fill here ---
 
 ### Question 19
@@ -379,7 +379,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 19 fill here ---
+[This figure](figures/bucket_ours.png)
 
 ### Question 20
 
@@ -388,7 +388,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 20 fill here ---
+[This figure](figures/registry_ours.png)
 
 ### Question 21
 
@@ -397,7 +397,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 21 fill here ---
+[This figure](figures/build_ours.png)
 
 ### Question 22
 
@@ -453,7 +453,7 @@ It could be interesting to log the images sent to the API, along with statistics
 >
 > Answer:
 
---- question 24 fill here ---
+One group member has used approximately 33 credits, another have used none. The remainin two group members ran into problems concerning 'denied permission' to access the billing information, and the issue was not resolved in time, hence also no credits. Thereby, 33 credits used in total.
 
 ## Overall discussion of project
 
@@ -474,7 +474,13 @@ It could be interesting to log the images sent to the API, along with statistics
 >
 > Answer:
 
---- question 25 fill here ---
+[This figure](figures/project_pipeline.png) shows the machine learning pipeline of our system. The diagram's starting point is our local setup which is connected to the weights and bias account logging hyperparameters as well as the hydra config files. The logs produced by training a model locally can be visualized using the wandb.ai project website.
+
+From the development point of view, the next steps are the pre-commit, commit, and push to the Github of the project and the dvc. The dvc will push some files and dependencies to cloud buckets, while keeping the verison info on Github. The local machine is able to access the files from the cloud buckets (data) and updates in code from the Github repository via pull commands.
+
+Looking at the Github representation on the pipeline diagram, four Google cloud related actions follow. These actions are responsible for storage, and monitoring on Google cloud. Whenever we push source code to the main branch on github, or build a new docker image, a trigger in Google cloud is activated, which helps us monitor the project builds. From the last and outer right part of the diagram the inference API is seen, and for this, Google run is the backend, which a user can access to use our application.
+
+
 
 ### Question 26
 
@@ -511,6 +517,15 @@ Apart from these slight hiccups the overall experience of completing this projec
 > *All members contributed to code by...*
 >
 > Answer:
-We worked side-by-side most of the time and helped each other a lot during the project.
 
-Student ...
+In general students contributed equally to the project, and we often worked side-by-side.
+
+In case specific contributions are needed:
+
+Katrine Bay s183910: Cookie-cutter, Git repo and Google Cloud setup, Buckets, Weights and biases setup and reports.
+
+Rasmus Bryld s183898: FastAPI, Cloud Run deployment, Demo.
+
+Asger Schultz s183912: Pre-trained model setup, docker, Git actions.
+
+Eper Stinner s222955: Initial model setup, docker/Makefile, Git CI, pre-commits.
