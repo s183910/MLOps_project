@@ -266,8 +266,8 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
-We saved our data to Google Drive and used DVC to manage it.
-This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving data to a git repository.
+<!-- TODO: need a little bit more   -->
+As an initial resolution, we stored the data on Google Drive and used DVC to manage it. With later improvements, we moved the data to the Data Storage buckets in Google Cloud storage, and continued managing it with DVC.This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving large amounts of data to a git repository.
 It also allowed us to make sure that everyone had the same data laid out in the same way, which was also useful for pipelines and deployment.
 
 ### Question 11
