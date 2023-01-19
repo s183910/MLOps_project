@@ -410,7 +410,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 22 fill here ---
+We deployed the model using FastAPI, docker and Cloud RUN. Python is used to pre-process a .png image, including reshaping, converting to greyscale, and converting to tensor, which is then
 
 ### Question 23
 
