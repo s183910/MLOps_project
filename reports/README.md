@@ -410,7 +410,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-We deployed the model using FastAPI, docker and Cloud RUN. Python is used to pre-process a .png image, including reshaping, converting to greyscale, and converting to tensor, which is then
+We deployed the model using FastAPI, docker and Cloud RUN. A POST request is used in FastAPI to receive a list of png images, which are then processed in a seperate python file, which includes reshaping, converting to greyscale, and converting to tensor. The tensors are used for inference, and the resulting letter is returned in the response to the POST. To deploy the API Cloud RUN is used, which requires a dockerfile, to Cloud Build our api image. By referencing our Cloud repository (which is linked to our Git repository) along with the location of our API dockerfile, a trigger is set such that (only) commits that include changes to files in our api folder, will trigger a new build. Cloud RUN returns a url endpoint for the API which can now be accessed 24/7 and independently of our own computers. To test the API another python script is written which used opencv to stream images from a webcam which are POSTed to the API and prints the predicted letter. Postman was used for testing.
 
 ### Question 23
 
@@ -425,7 +425,9 @@ We deployed the model using FastAPI, docker and Cloud RUN. Python is used to pre
 >
 > Answer:
 
---- question 23 fill here ---
+It seems like Google Cloud does quite a bit of monitoring, in terms of security, activity, speed, etc., so we did not prioritize this.
+It is possible to set a maximum number of requests e.g. to avoid expensive billing, and "Cloud Armor Network Security" apparently protects against stuff like DDoS attacks. Due to time constraints the API is not programmed to handle bad requests like wrong file formats, images too small to resize, etc. It could be interesting to log the images sent to API, along with statistics on classes etc. but this does pose some ethics questions regarding anonymity and privacy. It is clear that the model performs very poorly against images captured this way, and it would be cool to have another API POST that in addition to an image also recieves a label, such that we could build on the data-set remotely with webcams, by e.g. typing the letter we are presenting to the webcam.
+
 
 ### Question 24
 
