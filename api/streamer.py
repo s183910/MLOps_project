@@ -17,14 +17,16 @@ def stream():
         _, frame = video_capture.read()
         _, img_encoded = cv2.imencode('.png', frame)
         img_bytes = img_encoded.tobytes()
-        cv2.imshow('Video', frame)
-
+        
         files = [('files', img_bytes)]
 
         # Make a post request to the API
         response = requests.post(base_url + upload, files=files)
-        
-        print("letter:",response.json()[0]["classification"])
+        letter = response.json()[0]["classification"]
+
+        frame = cv2.putText(frame, "letter: "+letter, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+        cv2.imshow('Video', frame)
+        print("letter:", letter)
 
     video_capture.release()
     cv2.destroyAllWindows()
