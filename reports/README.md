@@ -133,6 +133,8 @@ s183910, s183898, s222955, s183912
 <!-- We used PyTorch for implementing our model and training and inference. -->
 From the Pytorch ecosystem we used one of the Pytorch Image models named MobileNet-V2.
 
+We have used the OpenCV for python to showcase the deployed model, and live demonstarte the models translation of a hand guesture into the corresponding letter. Additionally, we have used the request package in python to create the posts instead of using curl.
+
 ## Coding environment
 
 > In the following section we are interested in learning more about you local development environment.
@@ -247,9 +249,8 @@ Further, near 100 % unit test coverage does not guarantee that every part plays 
 >
 > Answer:
 
-<!-- TODO: maybe add more here-->
-We made use of both branches and pull requests during our project work. We created new branches as we needed them for testing and implementing specific features, followed by creating a pull request for merging the feature branch into the main branch, once the new feature was complete.
-
+<!-- TODO: Check. It has 106 words-->
+We made use of both branches and pull requests during our project work. We created new branches as we needed them for testing and implementing specific features, followed by creating a pull request for merging the feature branch into the main branch, once the new feature was complete. Hence, we have had a branch for concerning the replacement of model, the implementing of live demo functions in API, for the implementing of pre-commit features and many more. Our practice regarding the pull requests was to always have another group member doing the approving of it. This was done for the sake of practice and for collaboration.
 
 
 ### Question 10
