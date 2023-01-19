@@ -182,7 +182,7 @@ Further, near 100 % unit test coverage does not guarantee that every part plays 
 > **Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
 > **pull request can help improve version control.**
 >
-> Answer length: 100-200 words.
+> **Answer length: 100-200 words.**
 >
 > Example:
 > *We made use of both branches and PRs in our project. In our group, each member had an branch that they worked on in*
@@ -205,7 +205,6 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
-<!-- TODO: need a little bit more   -->
 As an initial resolution, we stored the data on Google Drive and used DVC to manage it. Later we improved our storage solution with moving the data from Google drive to the Data Storage buckets in Google Cloud storage, and continued managing it with DVC. This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving large amounts of data to a git repository.
 It also allowed us to make sure that all group memebers had the same data laid out in the same way, which was also useful for pipelines and deployment.
 
