@@ -76,16 +76,16 @@ end of the project.
 * [x] Write unit tests related to model construction and or model training
 * [x] Calculate the coverage.
 * [x] Get some continuous integration running on the github repository
-* [ ] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
-* [ ] Create a trigger workflow for automatically building your docker images
-* [ ] Get your model training in GCP using either the Engine or Vertex AI
-* [ ] Create a FastAPI application that can do inference using your model
+* [x] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
+* [x] Create a trigger workflow for automatically building your docker images
+* [x] Get your model training in GCP using either the Engine or Vertex AI
+* [x] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
 * [ ] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
-* [ ] Check how robust your model is towards data drifting
+* [x] Check how robust your model is towards data drifting
 * [ ] Setup monitoring for the system telemetry of your deployed model
 * [ ] Setup monitoring for the performance of your deployed model
 * [ ] If applicable, play around with distributed data loading
@@ -129,9 +129,9 @@ s183910, s183898, s222955, s183912
 >
 > Answer:
 
-<!-- TODO -->
-We used PyTorch for implementing our model and training and inference.
-<!-- From the Pytorch ecosystem we used one of the Pytorch Image models named MobileNet-V2. -->
+<!-- TODO !!!! -->
+<!-- We used PyTorch for implementing our model and training and inference. -->
+From the Pytorch ecosystem we used one of the Pytorch Image models named MobileNet-V2.
 
 ## Coding environment
 
@@ -168,10 +168,18 @@ To obtain a complete copy of the development environments, build the docker imag
 > *experiments.*
 > Answer:
 
+<!-- TODO check this oute -->
 The project is structured using the cookiecutter data science template.
 We filled in `predict_model.py` and `train_model.py`, and we added some extra utility files, e.g. `src/data/__init__.py`, which builds the dataset.
-We did not fill in `make_dataset.py`, as the the data requires little preprocessing, which is done at runtime.
-`visualize.py` was also not filled out, as we did the main visualization on wandb.
+We did not fill in `make_dataset.py`, as the the data requires little preprocessing, which is done at runtime, hence the folders `interim`, `processed`, and `external` is not used. These folders are therefore deleted.
+
+We have added the folder `tests` which contains our tests of data and the model. We have also added the folder `outputs` which is created by running the `train_model.py`. This folder contains the outputs of hydra which saves the logs and cofigurationfiles, to document how the training went and what hyperparameters were used.
+
+We have also added multiple dockerfiles in relation to the build of docker images and containers with all the dependensies required to run specific parts of our project. DVC-files and a DVC-folder are also added to manage the large amount of data in the cloud.
+
+The folder `wandb` has also been added to manage the hyperparameters and do the main visualizations.
+
+<!-- `visualize.py` was also not filled out, as we did the main visualization on wandb. -->
 
 ### Question 6
 
@@ -181,7 +189,7 @@ We did not fill in `make_dataset.py`, as the the data requires little preprocess
 > Answer length: 50-100 words.
 >
 > Answer:
-
+<!-- DONE I think -->
 To ensure code similarity, we used the `black` autoformatter.
 This was enforced with a pre-commit git hook that made sure no one would forget to use it.
 Further, we linted the code with `flake8`.
@@ -203,7 +211,8 @@ Further, we linted the code with `flake8`.
 >
 > Answer:
 
---- question 7 fill here ---
+<!-- TODO write more -->
+We have implemented 6 tests in total; 3 in relation to the data and 3 in relation to the model.
 
 ### Question 8
 
@@ -217,8 +226,9 @@ Further, we linted the code with `flake8`.
 > *code and even if we were then...*
 >
 > Answer:
+<!-- TODO write what it actually is -->
+We obtained a total code coverage of X% on our source code. Even if we had a code coverage of 100% we would not blindly trust this as 'goal completed', since a code covearge of 100% does not automatically imply that the code is well tested. The tests could be too few, or too easy. Hence, it is better to have 60% of the project tested correctly than to have 100% tested poorly.
 
---- question 8 fill here ---
 
 ### Question 9
 
@@ -251,9 +261,7 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
-We saved our data to Google Drive and used DVC to manage it.
-This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving data to a git repository.
-It also allowed us to make sure that everyone had the same data laid out in the same way, which was also useful for pipelines and deployment.
+We saved our data to Google Drive and used DVC to manage it. This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving data to a git repository. It also allowed us to make sure that everyone had the same data laid out in the same way, which was also useful for pipelines and deployment.
 
 ### Question 11
 
@@ -269,6 +277,7 @@ It also allowed us to make sure that everyone had the same data laid out in the 
 >
 > Answer:
 
+<!-- TODO -->
 --- question 11 fill here ---
 
 ## Running code and tracking experiments
