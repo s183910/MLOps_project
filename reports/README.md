@@ -518,5 +518,14 @@ Apart from these slight hiccups the overall experience of completing this projec
 >
 > Answer:
 
+In general students contributed equally to the project, and we often worked side-by-side.
 
-Student ...
+In case specific contributions are needed:
+
+Katrine Bay s183910: Cookie-cutter, Git repo and Google Cloud setup, Buckets, Weights and biases setup and reports.
+
+Rasmus Bryld s183898: FastAPI, Cloud Run deployment, Demo.
+
+Asger Schultz s183912: Pre-trained model setup, docker, Git actions.
+
+Eper Stinner s222955: Initial model setup, docker/Makefile, Git CI, pre-commits.
