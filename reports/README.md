@@ -407,7 +407,7 @@ We profiled our code after we got the main flows working to make sure that we we
 
 <!-- TODO finish this -->
 We made use of the following services on google cloud platform:
-- Buckets for storing Docker images
+- Buckets for storing Docker images and data storage
 - Cloud Run for building the inference API
 - Cloud Functions for the same TODO???
 
