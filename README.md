@@ -76,18 +76,18 @@ end of the project.
 * [x] Write unit tests related to model construction and or model training
 * [x] Calculate the coverage.
 * [x] Get some continuous integration running on the github repository
-* [ ] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
+* [x] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
 * [ ] Create a trigger workflow for automatically building your docker images
 * [ ] Get your model training in GCP using either the Engine or Vertex AI
-* [ ] Create a FastAPI application that can do inference using your model
+* [x] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
+* [x] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
 * [ ] Check how robust your model is towards data drifting
-* [ ] Setup monitoring for the system telemetry of your deployed model
-* [ ] Setup monitoring for the performance of your deployed model
+* [x] Setup monitoring for the system telemetry of your deployed model
+* [x] Setup monitoring for the performance of your deployed model
 * [ ] If applicable, play around with distributed data loading
 * [ ] If applicable, play around with distributed model training
 * [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed
@@ -203,7 +203,8 @@ Further, we linted the code with `flake8`.
 >
 > Answer:
 
---- question 7 fill here ---
+We implemented six unit tests for a coverage of 23 %, focusing mainly on the data and model.
+Notable, the training loop and prediction were not covered, as these are larger, self-contained blocks of code where writing unit tests is both harder and provide less benefit over testing stand-alone functions.
 
 ### Question 8
 
@@ -218,7 +219,12 @@ Further, we linted the code with `flake8`.
 >
 > Answer:
 
---- question 8 fill here ---
+The code coverage is 23 %.
+This is not much, but does cover the central parts which are data loading and inference.
+This is far from 100 % code coverage.
+However, 100 % code average should not be the end all, be all goal, as this does not guarantee code correctness.
+It only measures if the code at any point has been run, and tests will rarely cover every input value a piece of code could receive, leading to edge cases not necessarily being discovered even under 100 % coverege.
+Further, near 100 % unit test coverage does not guarantee that every part plays nicely together, even if they work individually.
 
 ### Question 9
 
@@ -354,7 +360,9 @@ This is one way to overcome the classical problem of accidentally overriding pre
 >
 > Answer:
 
---- question 15 fill here ---
+We build three docker images: `predict.dockerfile` for doing inference, `trainer.dockerfile` for training, and `api/gcp_run/dockerfile` for deploying to GCP.
+The two first primarily differ in their entry points, with one starting training and the other evaluation.
+The final is quite different, as it does not have an entry point, but instead uses `CMD` to start the inference api.
 
 ### Question 16
 
@@ -369,7 +377,9 @@ This is one way to overcome the classical problem of accidentally overriding pre
 >
 > Answer:
 
---- question 16 fill here ---
+We did not enforce debugging practices, as we found this was best left to individual preferences and circumstances.
+The debugging methods used ranged from VS Code's built-in debugger to the IPython debugger (`ipdb`) to the never-failing `print` spam.
+We profiled our code after we got the main flows working to make sure that we were satisfied with the runtime, mainly that the bottlenecks were the neural networks as would be expected.
 
 ## Working in the cloud
 
