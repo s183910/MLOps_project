@@ -532,7 +532,8 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 26 fill here ---
+<!-- TODO -->
+We have spent a great amount of time on deploying to cloud.
 
 ### Question 27
 
