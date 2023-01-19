@@ -365,8 +365,8 @@ We made use of the following services on google cloud platform:
 > *using a custom container: ...*
 >
 > Answer:
-<!-- TODO IIIHHHH -->
---- question 18 fill here ---
+
+We have created three different compute engine instances, where each instance is a virtuel machine. These were created in relation to the setup of Vertex AI in google cloud, which is meant to be used for training the model in the cloud. Each VM was created with the machine type e2-medium, with vCPU of one shared core and 4 GB memory.
 
 ### Question 19
 
