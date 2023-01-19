@@ -35,7 +35,7 @@ def evaluate(input_filepath: str, checkpoint: str) -> None:
     images, _ = next(iter(testloader))
 
     state_dict = torch.load(checkpoint)
-    model = SignModel(images.shape[1], 25)
+    model = SignModel(25)
     model.load_state_dict(state_dict)
 
     accuracy = 0

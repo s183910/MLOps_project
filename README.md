@@ -211,8 +211,8 @@ Further, we linted the code with `flake8`.
 >
 > Answer:
 
-<!-- TODO write more -->
-We have implemented 6 tests in total; 3 in relation to the data and 3 in relation to the model.
+We implemented six unit tests for a coverage of 23 %, focusing mainly on the data and model.
+Notable, the training loop and prediction were not covered, as these are larger, self-contained blocks of code where writing unit tests is both harder and provide less benefit over testing stand-alone functions.
 
 ### Question 8
 
@@ -226,9 +226,13 @@ We have implemented 6 tests in total; 3 in relation to the data and 3 in relatio
 > *code and even if we were then...*
 >
 > Answer:
-<!-- TODO write what it actually is -->
-We obtained a total code coverage of X% on our source code. Even if we had a code coverage of 100% we would not blindly trust this as 'goal completed', since a code covearge of 100% does not automatically imply that the code is well tested. The tests could be too few, or too easy. Hence, it is better to have 60% of the project tested correctly than to have 100% tested poorly.
 
+The code coverage is 23 %.
+This is not much, but does cover the central parts which are data loading and inference.
+This is far from 100 % code coverage.
+However, 100 % code average should not be the end all, be all goal, as this does not guarantee code correctness.
+It only measures if the code at any point has been run, and tests will rarely cover every input value a piece of code could receive, leading to edge cases not necessarily being discovered even under 100 % coverege.
+Further, near 100 % unit test coverage does not guarantee that every part plays nicely together, even if they work individually.
 
 ### Question 9
 
@@ -261,7 +265,9 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
-We saved our data to Google Drive and used DVC to manage it. This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving data to a git repository. It also allowed us to make sure that everyone had the same data laid out in the same way, which was also useful for pipelines and deployment.
+We saved our data to Google Drive and used DVC to manage it.
+This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving data to a git repository.
+It also allowed us to make sure that everyone had the same data laid out in the same way, which was also useful for pipelines and deployment.
 
 ### Question 11
 
@@ -277,8 +283,13 @@ We saved our data to Google Drive and used DVC to manage it. This allowed us to 
 >
 > Answer:
 
-<!-- TODO -->
---- question 11 fill here ---
+We used Github Actions to implement our continuous integration.
+Specifically, it consists of linting with `flake8` and unit testing with `pytest`.
+This helps ensure that new merge requests follow the code standards and don't break existing functionality.
+As we do not have any platform dependant code, we did not run the pipeline over multiple systems, but we did require both steps to succeed.
+Further, as the steps in the pipeline where rather simple, we found it best to keep them in a single flow, which not only meant
+we only had to have a single file, but it also reduced runtime by not having to set up twice.
+A finished workflow can be seen <a href="https://github.com/s183910/MLOps_project/actions/runs/3955272588">here</a>.
 
 ## Running code and tracking experiments
 
@@ -332,18 +343,17 @@ Even with seeds, PyTorch does not guarantee exactly the same outputs.
 >
 > Answer:
 
+The first figure shows a simple training loss curved tracked in Weights & Biases.
+This is one of the most important metrics to track during training, both to inform us about training stability and overfitting in tandem with the validation loss.
+The second figure shows how Weights & Biases was uses to track different experiments, where we could filter by hyperparameter choices and other variables.
+This is one way to overcome the classical problem of accidentally overriding previous experiments or messing up which were which.
 
 ```markdown
-![Weights and biases figure](figures/wandb.png)
+![Weights and biases figure](figures/wandb_ours.png)
 ```
 ```markdown
-![Bucket](figures/bucket.png)
+![Weights and biases figure](figures/wandb_ours2.png)
 ```
-```markdown
-![Build](figures/build.png)
-```
-
-<!-- TODO: replace the images above with our images-->
 
 ### Question 15
 
@@ -358,7 +368,9 @@ Even with seeds, PyTorch does not guarantee exactly the same outputs.
 >
 > Answer:
 
---- question 15 fill here ---
+We build three docker images: `predict.dockerfile` for doing inference, `trainer.dockerfile` for training, and `api/gcp_run/dockerfile` for deploying to GCP.
+The two first primarily differ in their entry points, with one starting training and the other evaluation.
+The final is quite different, as it does not have an entry point, but instead uses `CMD` to start the inference api.
 
 ### Question 16
 
@@ -373,7 +385,9 @@ Even with seeds, PyTorch does not guarantee exactly the same outputs.
 >
 > Answer:
 
---- question 16 fill here ---
+We did not enforce debugging practices, as we found this was best left to individual preferences and circumstances.
+The debugging methods used ranged from VS Code's built-in debugger to the IPython debugger (`ipdb`) to the never-failing `print` spam.
+We profiled our code after we got the main flows working to make sure that we were satisfied with the runtime, mainly that the bottlenecks were the neural networks as would be expected.
 
 ## Working in the cloud
 
@@ -391,7 +405,10 @@ Even with seeds, PyTorch does not guarantee exactly the same outputs.
 > Answer:
 
 <!-- TODO finish this -->
-We made use of the following services on google cloud platform: Vertex AI, Bucket, ... .
+We made use of the following services on google cloud platform:
+- Buckets for storing Docker images
+- Cloud Run for building the inference API
+- Cloud Functions for the same TODO???
 
 ### Question 18
 
