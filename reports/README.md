@@ -150,10 +150,14 @@ From the Pytorch ecosystem we used one of the Pytorch Image models named MobileN
 >
 > Answer:
 
-<!-- TODO: Done, just double check docker commands -->
+<!-- TODO: Check if this is what they mean -->
 We used `pipreqs` for generating a dependency list with exact versions.
 Development libraries, such as `pytest` were manually maintained in `requirements.txt`.
-To obtain a complete copy of the development environments, build the docker images using `docker build -f predict.dockerfile . -t predict:latest` for inference and `docker build -f train.dockerfile . -t train:latest`.
+To get a complete copy of our development environment one would only have to run the `make requirements` command in the python environment of their choice (provided both python and make are already installed).
+
+To obtain the input data one would have to execute the `make data` command which pulls from a dvc remote.
+
+To locally create the training and prediction environments a new team member would have to build the docker images using `docker build -f predict.dockerfile . -t predict:latest` for inference and `docker build -f train.dockerfile . -t train:latest`, or simply `make build-docker-train` and `make build-docker-predict`.
 
 ### Question 5
 
@@ -190,9 +194,9 @@ The folder `wandb` has also been added to manage the hyperparameters and do the 
 >
 > Answer:
 <!-- DONE I think -->
-To ensure code similarity, we used the `black` autoformatter.
-This was enforced with a pre-commit git hook that made sure no one would forget to use it.
-Further, we linted the code with `flake8`.
+To ensure code similarity, we used the `black` autoformatter, the `isort` utility and the `flake8` linter with slightly altered configurations. These rules were enforced with a pre-commit git hook that made sure no one would forget to use them (see `.pre-commit-config.yaml`).
+
+Good formatting and code quality improves readability, making it easier for all team members to understand and alter parts of the implementation later. In large projects this is especially important since they change a lot over time and many people contribute to them. Without enforced formatting rules the code would quickly become difficult to maintain.
 
 ## Version control
 
