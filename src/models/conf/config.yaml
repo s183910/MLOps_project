@@ -4,4 +4,3 @@ hyperparameters:
 data_folder:
   mnist_train: "data/raw/sign_mnist_train.csv"
   mnist_test: "data/raw/sign_mnist_test.csv"
-

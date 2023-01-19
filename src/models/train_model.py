@@ -1,7 +1,7 @@
 import logging
 
-import torch.profiler as profiler
 import hydra
+import torch.profiler as profiler
 from model import SignModel
 from omegaconf import DictConfig
 from torch import jit, nn, optim, save, utils
@@ -31,7 +31,7 @@ def train(cfg: DictConfig):
     )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
     images, _ = next(iter(trainloader))
-    model = SignModel(images.shape[1], 25)
+    model = SignModel(25)
 
     wandb.watch(model, log_freq=100)
 
@@ -42,7 +42,9 @@ def train(cfg: DictConfig):
     with profiler.profile(
         activities=[profiler.ProfilerActivity.CPU],
         record_shapes=True,
-        on_trace_ready=profiler.tensorboard_trace_handler("./outputs/tensorprofilebrrr"),
+        on_trace_ready=profiler.tensorboard_trace_handler(
+            "./outputs/tensorprofilebrrr"
+        ),
     ) as prof:
         for e in range(cfg.hyperparameters.epochs):
             logging.info("Epooch %i / %i" % (e + 1, cfg.hyperparameters.epochs))
