@@ -331,7 +331,7 @@ The final is quite different, as it does not have an entry point, but instead us
 
 We did not enforce debugging practices, as we found this was best left to individual preferences and circumstances.
 The debugging methods used ranged from VS Code's built-in debugger to the IPython debugger (`ipdb`) to the never-failing `print` spam.
-We profiled our code after we got the main flows working to make sure that we were satisfied with the runtime, mainly that the bottlenecks were the neural networks as would be expected.
+We profiled our code after we got the main flows working to make sure that we were satisfied with the runtime. The main bottlenecks were the neural networks as would be expected.
 
 ## Working in the cloud
 
