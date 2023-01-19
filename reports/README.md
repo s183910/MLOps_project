@@ -511,6 +511,6 @@ Apart from these slight hiccups the overall experience of completing this projec
 > *All members contributed to code by...*
 >
 > Answer:
-
+We worked side-by-side most of the time and helped each other a lot during the project.
 
 Student ...
