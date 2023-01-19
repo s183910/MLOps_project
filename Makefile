@@ -165,5 +165,3 @@ docker-predict:
 	docker run --name predict --rm \
     -v $(pwd)/models:/models \
     predict:latest data/raw/sign_mnist_test.csv models/trained_model.pth
-
-
