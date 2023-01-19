@@ -286,7 +286,6 @@ This is one of the most important metrics to track during training, both to info
 
 The second figure shows how Weights & Biases was uses to track different experiments, where we could filter by hyperparameter choices and other variables. It provides important information concerning each model training like the state of the run, the runtime, the loss obtained etc.
 
-
 This is one way to overcome the classical problem of accidentally overriding previous experiments or messing up which were which.
 
 We did not perform a sweep, hence not using the extension of weights and biases to optimize the hyperparameters. We found logging the performance using hydra to be sufficient for this project, although we would definitely consider using sweep with weights and biases for more elaborate projects in the future, along with the easy sharing of performance plots.
@@ -312,9 +311,12 @@ We did not perform a sweep, hence not using the extension of weights and biases 
 >
 > Answer:
 
-We build three docker images: `predict.dockerfile` for doing inference, `trainer.dockerfile` for training, and `api/gcp_run/dockerfile` for deploying to GCP.
-The two first primarily differ in their entry points, with one starting training and the other evaluation.
-The final is quite different, as it does not have an entry point, but instead uses `CMD` to start the inference api.
+The image defined by `trainer.dockerfile` was used locally to train the model on pre-available data and save the resulting model state in a shared directory.
+
+The image defined by `predict.dockerfile` was used to load the trained model state, test some pre-available data and output the computed accuracy of the model.
+These two files are used for local deployment and primarily differ in their entry points, with one starting training and the other evaluation.
+
+The dockerfile found at `api/gcp_run/dockerfile` is used for deploying to GCP. THis does not have an entry point, but instead uses `CMD` to start the inference api.
 
 ### Question 16
 
@@ -331,7 +333,8 @@ The final is quite different, as it does not have an entry point, but instead us
 
 We did not enforce debugging practices, as we found this was best left to individual preferences and circumstances.
 The debugging methods used ranged from VS Code's built-in debugger to the IPython debugger (`ipdb`) to the never-failing `print` spam.
-We profiled our code after we got the main flows working to make sure that we were satisfied with the runtime. The main bottlenecks were the neural networks as would be expected.
+
+We profiled our code after we got the main flows working to make sure that we were satisfied with the runtime. As would be expected, the main bottlenecks were the neural networks.
 
 ## Working in the cloud
 
@@ -410,7 +413,12 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-We deployed the model using FastAPI, docker and Cloud RUN. A POST request is used in FastAPI to receive a list of png images, which are then processed in a seperate python file, which includes reshaping, converting to greyscale, and converting to tensor. The tensors are used for inference, and the resulting letter is returned in the response to the POST. To deploy the API Cloud RUN is used, which requires a dockerfile, to Cloud Build our api image. By referencing our Cloud repository (which is linked to our Git repository) along with the location of our API dockerfile, a trigger is set such that (only) commits that include changes to files in our api folder, will trigger a new build. Cloud RUN returns a url endpoint for the API which can now be accessed 24/7 and independently of our own computers. To test the API another python script is written which used opencv to stream images from a webcam which are POSTed to the API and prints the predicted letter. Postman was used for testing.
+We deployed the model using FastAPI, docker and Cloud RUN.
+
+A POST request is used in FastAPI to receive a list of png images, which are then processed in a separate python file, which includes reshaping, converting to greyscale, and converting to tensor. The tensors are used for inference, and the resulting letter is returned to the client as a response. To deploy the API, Cloud RUN is used, which requires a dockerfile, to Cloud Build our api image. By referencing our Cloud repository (which is linked to our Git repository) along with the location of our API dockerfile, a trigger is set such that (only) commits that include changes to files in our api folder, will trigger a new build. Cloud RUN returns a url endpoint for the API which can now be accessed 24/7 and independently of our own computers.
+
+To test the API another python script was written which used opencv to stream images from a webcam. These are POST-ed to the API and the predicted letter is received as a response.
+Postman was used for testing.
 
 ### Question 23
 
@@ -425,8 +433,12 @@ We deployed the model using FastAPI, docker and Cloud RUN. A POST request is use
 >
 > Answer:
 
-It seems like Google Cloud does quite a bit of monitoring, in terms of security, activity, speed, etc., so we did not prioritize this.
-It is possible to set a maximum number of requests e.g. to avoid expensive billing, and "Cloud Armor Network Security" apparently protects against stuff like DDoS attacks. Due to time constraints the API is not programmed to handle bad requests like wrong file formats, images too small to resize, etc. It could be interesting to log the images sent to API, along with statistics on classes etc. but this does pose some ethics questions regarding anonymity and privacy. It is clear that the model performs very poorly against images captured this way, and it would be cool to have another API POST that in addition to an image also recieves a label, such that we could build on the data-set remotely with webcams, by e.g. typing the letter we are presenting to the webcam.
+According to the course material, we set a function invocation counter where an alert is fired if the function is invoked more than twice during a 5 minute period. This was only used as a test alert and probably more fine-tuned parameters would be needed in the future.
+
+Overall we did not prioritize this topic as it seems Google Cloud does quite a bit of monitoring, in terms of security, activity, speed, etc. It is also possible to set a maximum number of requests and "Cloud Armor Network Security" can protect against e.g. DDoS attacks.
+Due to time constraints the API is not programmed to handle bad requests (e.g. wrong file formats or images too small to resize).
+
+It could be interesting to log the images sent to the API, along with statistics on classes but this does pose some ethics questions regarding anonymity and privacy. It is clear that the model currently performs very poorly against input images, and it would be cool to have another API endpoint that in addition to an image also recieves a label, such that we could extend our dataset remotely with webcams, by e.g. typing the letter we are presenting to the webcam.
 
 
 ### Question 24
@@ -476,7 +488,14 @@ It is possible to set a maximum number of requests e.g. to avoid expensive billi
 >
 > Answer:
 
---- question 26 fill here ---
+Setting up the deployment environment and the Google cloud hosting proved to be the most difficult and time consuming part of the project. This was mainly because the team was not very familiar with the Google Cloud platform's machine learning solutions, so even making sense of the interface was a bit overwhelming. It took a lot of trial and error and meticulous tutorial and documentation reading to finish setting up the whole pipeline but we managed to pull through.
+
+Setting up docker was also a time consuming process since if a missing file or a wrong command was discovered too late in the configuration file then the whole container had to be rebuilt (which resulted in a fairly slow feedback loop during development).
+
+A more personal struggle of the team was coordinating work during the last two weeks as one of the members had to relocate to the United States. We overcame this difficulty by planning early, sharing end-of-day status reports with each other via slack and consulting by call when the time difference allowed it.
+
+Additionally, an obstacle which we encountered was one group member accidentally working on a google cloud project with the same name as as the actual project. It took some time before the group figured out the mistake and some work had to be re-done.
+Apart from these slight hiccups the overall experience of completing this project was a positive one.
 
 ### Question 27
 
@@ -493,4 +512,5 @@ It is possible to set a maximum number of requests e.g. to avoid expensive billi
 >
 > Answer:
 
---- question 27 fill here ---
+
+Student ...
