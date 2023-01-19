@@ -344,7 +344,7 @@ Even with seeds, PyTorch does not guarantee exactly the same outputs.
 > Answer:
 
 The first figure shows a simple training loss curved tracked in Weights & Biases.
-This is one of the most important metrics to track during training, both to inform us about training stability and overfitting in tandem with the validation loss.
+This is one of the most important metrics to track during training, both to inform us about training stability and overfitting together with the validation loss.
 The second figure shows how Weights & Biases was uses to track different experiments, where we could filter by hyperparameter choices and other variables.
 This is one way to overcome the classical problem of accidentally overriding previous experiments or messing up which were which.
 
