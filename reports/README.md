@@ -133,6 +133,8 @@ s183910, s183898, s222955, s183912
 <!-- We used PyTorch for implementing our model and training and inference. -->
 From the Pytorch ecosystem we used one of the Pytorch Image models named MobileNet-V2.
 
+We have used the OpenCV for python to showcase the deployed model, and live demonstarte the models translation of a hand guesture into the corresponding letter. Additionally, we have used the request package in python to create the posts instead of using curl.
+
 ## Coding environment
 
 > In the following section we are interested in learning more about you local development environment.
@@ -251,9 +253,8 @@ Further, near 100 % unit test coverage does not guarantee that every part plays 
 >
 > Answer:
 
-<!-- TODO: maybe add more here-->
-We made use of both branches and pull requests during our project work. We created new branches as we needed them for testing and implementing specific features, followed by creating a pull request for merging the feature branch into the main branch, once the new feature was complete.
-
+<!-- TODO: Check. It has 106 words-->
+We made use of both branches and pull requests during our project work. We created new branches as we needed them for testing and implementing specific features, followed by creating a pull request for merging the feature branch into the main branch, once the new feature was complete. Hence, we have had a branch for concerning the replacement of model, the implementing of live demo functions in API, for the implementing of pre-commit features and many more. Our practice regarding the pull requests was to always have another group member doing the approving of it. This was done for the sake of practice and for collaboration.
 
 
 ### Question 10
@@ -269,8 +270,8 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
-We saved our data to Google Drive and used DVC to manage it.
-This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving data to a git repository.
+<!-- TODO: need a little bit more   -->
+As an initial resolution, we stored the data on Google Drive and used DVC to manage it. With later improvements, we moved the data to the Data Storage buckets in Google Cloud storage, and continued managing it with DVC.This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving large amounts of data to a git repository.
 It also allowed us to make sure that everyone had the same data laid out in the same way, which was also useful for pipelines and deployment.
 
 ### Question 11
@@ -410,7 +411,7 @@ We profiled our code after we got the main flows working to make sure that we we
 
 <!-- TODO finish this -->
 We made use of the following services on google cloud platform:
-- Buckets for storing Docker images
+- Buckets for storing Docker images and data storage
 - Cloud Run for building the inference API
 - Cloud Functions for the same TODO???
 
