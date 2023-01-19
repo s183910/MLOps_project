@@ -281,7 +281,7 @@ This helps ensure that new merge requests follow the code standards and don't br
 As we do not have any platform dependant code, we did not run the pipeline over multiple systems, but we did require both steps to succeed.
 Further, as the steps in the pipeline where rather simple, we found it best to keep them in a single flow, which not only meant
 we only had to have a single file, but it also reduced runtime by not having to set up twice.
-A workflow can be seed at TODO.
+A finished workflow can be seen <a href="https://github.com/s183910/MLOps_project/actions/runs/3955272588">here</a>.
 
 ## Running code and tracking experiments
 
