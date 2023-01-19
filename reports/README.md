@@ -516,10 +516,10 @@ In general students contributed equally to the project, and we often worked side
 
 In case specific contributions are needed:
 
-Katrine Bay s183910: Cookie-cutter, Git repo and Google Cloud setup, Weights and biases setup and reports.
+Katrine Bay s183910: Cookie-cutter, Git repo and Google Cloud setup, Buckets, Weights and biases setup and reports.
 
 Rasmus Bryld s183898: FastAPI, Cloud Run deployment, Demo.
 
 Asger Schultz s183912: Pre-trained model setup, docker, Git actions.
 
-Eper Stinner s222955: Initial model setup, docker/Makefile, Git CI, pre-commits, 
+Eper Stinner s222955: Initial model setup, docker/Makefile, Git CI, pre-commits.
