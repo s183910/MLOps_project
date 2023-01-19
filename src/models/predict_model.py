@@ -1,12 +1,19 @@
+import logging
+from pathlib import Path
+
+import click
 import torch
+from dotenv import find_dotenv, load_dotenv
 from model import SignModel
-from pelutils import log
 from torchvision import transforms
 
 from src.data import SignMNISTDataset
 
 
-def evaluate(checkpoint: str) -> None:
+@click.command()
+@click.argument("input_filepath")
+@click.argument("checkpoint")
+def evaluate(input_filepath: str, checkpoint: str) -> None:
     """
     Loads model state from checkpoint and validates it. Prints the model accuracy.
 
@@ -16,9 +23,10 @@ def evaluate(checkpoint: str) -> None:
     Returns:
         :rtype: None
     """
-    log("Loading test set")
+    logger = logging.getLogger(__name__)
+    logger.info("Loading test set")
     testset = SignMNISTDataset(
-        csv_file="data/raw/sign_mnist_test.csv",
+        csv_file=input_filepath,
         transform=transforms.Compose(
             [transforms.ToTensor(), transforms.Normalize(0, 255)]
         ),
@@ -42,10 +50,17 @@ def evaluate(checkpoint: str) -> None:
             results.append(equals.type(torch.FloatTensor).reshape(-1))
         else:
             accuracy = torch.mean(torch.concat(results))
-            log(f"Accuracy: {accuracy.item()*100} %")
+            print(f"Accuracy: {accuracy.item()*100} %")
 
 
 if __name__ == "__main__":
-    log.configure("train.log")
-    with log.log_errors:
-        evaluate("models/initial.pth")
+    log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    logging.basicConfig(level=logging.INFO, format=log_fmt)
+
+    # not used in this stub but often useful for finding various files
+    project_dir = Path(__file__).resolve().parents[2]
+
+    # find .env automagically by walking up directories until it's found, then
+    # load up the .env entries as environment variables
+    load_dotenv(find_dotenv())
+    evaluate()
