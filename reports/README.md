@@ -369,7 +369,7 @@ We made use of the following services on google cloud platform:
 > *using a custom container: ...*
 >
 > Answer:
-
+<!-- TODO -->
 --- question 18 fill here ---
 
 ### Question 19
@@ -379,7 +379,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 19 fill here ---
+[This figure](figures/bucket_ours.png)
 
 ### Question 20
 
@@ -388,7 +388,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 20 fill here ---
+[This figure](figures/registry_ours.png)
 
 ### Question 21
 
@@ -397,7 +397,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 21 fill here ---
+[This figure](figures/build_ours.png)
 
 ### Question 22
 
@@ -453,7 +453,7 @@ It could be interesting to log the images sent to the API, along with statistics
 >
 > Answer:
 
---- question 24 fill here ---
+One group member has used approximately 33 credits, another have used none. The remainin two group members ran into problems concerning 'denied permission' to access the billing information, and the issue was not resolved in time, hence also no credits. Thereby, 33 credits used in total.
 
 ## Overall discussion of project
 
