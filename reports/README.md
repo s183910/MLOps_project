@@ -73,7 +73,7 @@ s183910, s183898, s222955, s183912
 >
 > Answer:
 <!-- TODO elaborate and check -->
-From the Pytorch ecosystem we used one of the Pytorch Image models named MobileNet-V2. This is an already pretrained and optimized model which is much better than starting from scratch. Like this, we did not need to use much time on building our own model and could focus on implementing our inference solutions more quickly.
+From the Pytorch ecosystem we have used one of the Pytorch Image models named MobileNet-V2. This is an already pretrained and optimized model which is much better than starting from scratch. Like this, we did not need to use much time on building our own model and could focus on implementing our inference solutions more quickly.
 
 We also used the OpenCV for python to showcase the deployed model, and demonstrate the model's translation of a hand gesture into the corresponding letter. Additionally, we used the `request` package in python instead of `curl` to send POST requests to our inference API.
 
@@ -155,8 +155,11 @@ Good formatting and code quality improves readability, making it easier for all 
 >
 > Answer:
 
-We implemented six unit tests for a coverage of 23 %, focusing mainly on the data and model.
-Notable, the training loop and prediction were not covered, as these are larger, self-contained blocks of code where writing unit tests is both harder and provide less benefit over testing stand-alone functions.
+We implemented six unit tests for a coverage of 23 %, focusing mainly on the data and model. These test the shape and dimensions of the input and output of the model and the data samples.
+Notably, the training loop and prediction were not covered, as these are larger, self-contained blocks of code where writing unit tests is both harder and provide less benefit over testing stand-alone functions.
+
+The unit tests for data also focus on dataset and batch size when loading.
+
 
 ### Question 8
 
@@ -171,11 +174,8 @@ Notable, the training loop and prediction were not covered, as these are larger,
 >
 > Answer:
 
-The code coverage is 23 %.
-This is not much, but does cover the central parts which are data loading and inference.
-It is important to note that code coverage only measures how much of the code has been run at any point during testing. This does not guarantee code correctness as tests will rarely cover every hat 100 % code coverage does not guarantee code correctness. Code cover
-It only measures if the code at any point has been run, and tests will rarely cover every input value a piece of code could receive, leading to edge cases not necessarily being discovered even under 100 % coverege.
-Further, near 100 % unit test coverage does not guarantee that every part plays nicely together, even if they work individually.
+The code coverage is 23 %. This is not much, but does cover the central parts which are data loading and inference.
+It is important to note that code coverage only measures how much of the code has been run at any point during testing. Therefore it does not guarantee code correctness as tests will rarely cover every input value. This leads to some edge cases not necessarily being discovered. Therefore it is better to concentrate on writing more relevant tests than just aiming for a high code coverage. Furthermore, near 100 % unit test coverage does not guarantee that different components work well together, even if they work as expected individually.
 
 ### Question 9
 
