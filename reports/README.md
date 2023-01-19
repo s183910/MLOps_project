@@ -42,62 +42,6 @@ short, too long, have you included an image when asked to.
 For both functions to work it is important that you do not rename anything. The script have two dependencies that can
 be installed with `pip install click markdown`.
 
-## Overall project checklist
-
-The checklist is *exhaustic* which means that it includes everything that you could possible do on the project in
-relation the curricilum in this course. Therefore, we do not expect at all that you have checked of all boxes at the
-end of the project.
-
-### Week 1
-
-* [x] Create a git repository
-* [x] Make sure that all team members have write access to the github repository
-* [x] Create a dedicated environment for you project to keep track of your packages
-* [x] Create the initial file structure using cookiecutter
-* [ ] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
-* [x] Add a model file and a training script and get that running
-* [x] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
-* [x] Remember to comply with good coding practices (`pep8`) while doing the project
-* [x] Do a bit of code typing and remember to document essential parts of your code
-* [x] Setup version control for your data or part of your data
-* [x] Construct one or multiple docker files for your code
-* [x] Build the docker files locally and make sure they work as intended
-* [x] Write one or multiple configurations files for your experiments
-* [x] Used Hydra to load the configurations and manage your hyperparameters
-* [x] When you have something that works somewhat, remember at some point to to some profiling and see if
-      you can optimize your code
-* [x] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
-      consider running a hyperparameter optimization sweep.
-* [ ] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
-
-### Week 2
-
-* [x] Write unit tests related to the data part of your code
-* [x] Write unit tests related to model construction and or model training
-* [x] Calculate the coverage.
-* [x] Get some continuous integration running on the github repository
-* [x] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
-* [x] Create a trigger workflow for automatically building your docker images
-* [x] Get your model training in GCP using either the Engine or Vertex AI
-* [x] Create a FastAPI application that can do inference using your model
-* [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
-
-### Week 3
-
-* [x] Check how robust your model is towards data drifting
-* [ ] Setup monitoring for the system telemetry of your deployed model
-* [ ] Setup monitoring for the performance of your deployed model
-* [ ] If applicable, play around with distributed data loading
-* [ ] If applicable, play around with distributed model training
-* [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed
-
-### Additional
-
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
-* [x] Uploaded all your code to github
-
 ## Group information
 
 ### Question 1
@@ -193,7 +137,7 @@ The folder `wandb` has also been added to manage the hyperparameters and do the 
 > Answer length: 50-100 words.
 >
 > Answer:
-<!-- DONE I think -->
+
 To ensure code similarity, we used the `black` autoformatter, the `isort` utility and the `flake8` linter with slightly altered configurations. These rules were enforced with a pre-commit git hook that made sure no one would forget to use them (see `.pre-commit-config.yaml`).
 
 Good formatting and code quality improves readability, making it easier for all team members to understand and alter parts of the implementation later. In large projects this is especially important since they change a lot over time and many people contribute to them. Without enforced formatting rules the code would quickly become difficult to maintain.
@@ -205,13 +149,7 @@ Good formatting and code quality improves readability, making it easier for all 
 
 ### Question 7
 
-> **How many tests did you implement and what are they testing in your code?**
->
-> Answer length: 50-100 words.
->
-> Example:
-> *In total we have implemented X tests. Primarily we are testing ... and ... as these the most critical parts of our*
-> *application but also ... .*
+> **How many tests did you implement?**
 >
 > Answer:
 
@@ -223,7 +161,7 @@ Notable, the training loop and prediction were not covered, as these are larger,
 > **What is the total code coverage (in percentage) of your code? If you code had an code coverage of 100% (or close**
 > **to), would you still trust it to be error free? Explain you reasoning.**
 >
-> Answer length: 100-200 words.
+> **Answer length: 100-200 words.**
 >
 > Example:
 > *The total code coverage of code is X%, which includes all our source code. We are far from 100% coverage of our **
@@ -251,9 +189,7 @@ Further, near 100 % unit test coverage does not guarantee that every part plays 
 >
 > Answer:
 
-<!-- TODO: Check. It has 106 words-->
 We made use of both branches and pull requests during our project work. We created new branches as we needed them for testing and implementing specific features, followed by creating a pull request for merging the feature branch into the main branch, once the new feature was complete. Hence, we have had a branch for concerning the replacement of model, the implementing of live demo functions in API, for the implementing of pre-commit features and many more. Our practice regarding the pull requests was to always have another group member doing the approving of it. This was done for the sake of practice and for collaboration.
-
 
 ### Question 10
 
@@ -423,7 +359,7 @@ We made use of the following services on google cloud platform:
 > **The backbone of GCP is the Compute engine. Explained how you made use of this service and what type of VMs**
 > **you used?**
 >
-> Answer length: 100-200 words.
+> Answer length: 50-100 words.
 >
 > Example:
 > *We used the compute engine to run our ... . We used instances with the following hardware: ... and we started the*
@@ -440,8 +376,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-<!-- TODO write about this and maybe replace the image. -->
-[Our buckets](figures/bucket_ours.png).
+--- question 19 fill here ---
 
 ### Question 20
 
@@ -459,8 +394,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-<!-- TODO write about this and maybe replace the image. -->
-[Our GCP cloud build history](figures/build_ours.png).
+--- question 21 fill here ---
 
 ### Question 22
 
@@ -520,7 +454,7 @@ We made use of the following services on google cloud platform:
 > Answer length: 200-400 words
 >
 > Example:
->
+> *
 > *The starting point of the diagram is our local setup, where we integrated ... and ... and ... into our code.*
 > *Whenever we commit code and puch to github, it auto triggers ... and ... . From there the diagram shows ...*
 >
@@ -540,8 +474,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-<!-- TODO -->
-We have spent a great amount of time on deploying to cloud.
+--- question 26 fill here ---
 
 ### Question 27
 
