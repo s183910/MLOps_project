@@ -8,7 +8,7 @@ class APIModelHandler:
 
     def __init__(self):
         state_dict = torch.load("app/initial.pth")
-        self.model = SignModel(784,25)
+        self.model = SignModel(25)
         self.model.load_state_dict(state_dict)
         self.model.eval()
 

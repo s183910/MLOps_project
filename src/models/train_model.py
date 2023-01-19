@@ -31,7 +31,7 @@ def train(cfg: DictConfig):
     )
     trainloader = utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
     images, _ = next(iter(trainloader))
-    model = SignModel(images.shape[1], 25)
+    model = SignModel(25)
 
     wandb.watch(model, log_freq=100)
 
