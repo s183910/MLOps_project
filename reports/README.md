@@ -94,6 +94,7 @@ We also used the OpenCV for python to showcase the deployed model, and demonstra
 >
 > Answer:
 
+<!-- TODO: READ -->
 We used `pipreqs` for generating a dependency list with exact versions.
 Development libraries, such as `pytest` were manually maintained in `requirements.txt`.
 To get a complete copy of our development environment one would only have to run the `make requirements` command in a python environment of their choice (provided both python and make are already installed).
@@ -204,8 +205,9 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
-As an initial resolution, we stored the data on Google Drive and used DVC to manage it. With later improvements, we moved the data to the Data Storage buckets in Google Cloud storage, and continued managing it with DVC.This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving large amounts of data to a git repository.
-It also allowed us to make sure that everyone had the same data laid out in the same way, which was also useful for pipelines and deployment.
+<!-- TODO: need a little bit more   -->
+As an initial resolution, we stored the data on Google Drive and used DVC to manage it. Later we improved our storage solution with moving the data from Google drive to the Data Storage buckets in Google Cloud storage, and continued managing it with DVC. This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving large amounts of data to a git repository.
+It also allowed us to make sure that all group memebers had the same data laid out in the same way, which was also useful for pipelines and deployment.
 
 ### Question 11
 
@@ -246,7 +248,7 @@ A finished workflow can be seen <a href="https://github.com/s183910/MLOps_projec
 >
 > Answer:
 
-We used hydra for controlling hyperparameters, as it allows for config files that help control which experiments were run and makes sure that the correct experiments are run.
+We stated the hyperparameter values in hydra config files, and used the hydra decorator added to the 'train'-function in the `train_model.py` to input the hyperparameters, and log the performance of the experiment run along with the hyperparameters used. We run an experiment by writting 'make train' in the root directory, which in turn calls the `traine_model.py`. One could also simply write 'python train_model.py', which would result in the same output.
 
 ### Question 13
 
@@ -261,10 +263,9 @@ We used hydra for controlling hyperparameters, as it allows for config files tha
 >
 > Answer:
 
-Config files are one part of the ansewr, making sure that there is no doubt on the hyperparameters.
-DVC also enables us to ensure that the data would be identical from machine to machine, and Docker allowed us to provide a controlled environment with guaranteed library versions, making sure that no changed behaviour in different libraries would have an effect.
-The only non-reproducibility comes from stochistic processes such as batch shuffling, which we did not control with seeds.
-Even with seeds, PyTorch does not guarantee exactly the same outputs.
+Config files are one part of the answer. These files are used to make sure that there is no doubt what hyperparameters resulted in which model performance.
+DVC also enables us to ensure that the data would be identical from machine to machine, and Docker allowed us to provide a controlled environment with guaranteed library versions, dependencies and packages, making sure that no changed behaviour in different libraries would have an effect.
+The only non-reproducibility comes from stochastic processes such as batch shuffling, which we did not control with seeds. Even with seeds, PyTorch does not guarantee exactly the same outputs.
 
 ### Question 14
 
@@ -282,9 +283,22 @@ Even with seeds, PyTorch does not guarantee exactly the same outputs.
 > Answer:
 
 The first figure shows a simple training loss curved tracked in Weights & Biases.
-This is one of the most important metrics to track during training, both to inform us about training stability and overfitting in tandem with the validation loss.
-The second figure shows how Weights & Biases was uses to track different experiments, where we could filter by hyperparameter choices and other variables.
+This is one of the most important metrics to track during training, both to inform us about training stability and overfitting together with the validation loss.
+
+The second figure shows how Weights & Biases was uses to track different experiments, where we could filter by hyperparameter choices and other variables. It provides important information concerning each model training like the state of the run, the runtime, the loss obtained etc.
+
+
 This is one way to overcome the classical problem of accidentally overriding previous experiments or messing up which were which.
+
+We did not perform a sweep, hence not using the extension of weights and biases to optimize the hyperparameters. We found logging the performance using hydra to be sufficient for this project, although we would definitely consider using sweep with weights and biases for more elaborate projects in the future, along with the easy sharing of performance plots.
+
+
+```markdown
+![Weights and biases figure](figures/wandb_ours.png)
+```
+```markdown
+![Weights and biases figure](figures/wandb_ours_table.png)
+```
 
 ### Question 15
 
