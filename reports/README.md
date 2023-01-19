@@ -379,7 +379,10 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-[This figure](figures/bucket_ours.png)
+
+```markdown
+![The projects buckets on GCP](figures/bucket_ours.png)
+```
 
 ### Question 20
 
@@ -388,7 +391,10 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-[This figure](figures/registry_ours.png)
+
+```markdown
+![The projects registry on GCP](figures/registry_ours.png)
+```
 
 ### Question 21
 
@@ -397,7 +403,10 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-[This figure](figures/build_ours.png)
+
+```markdown
+![The projects builds on GCP](figures/build_ours.png)
+```
 
 ### Question 22
 
@@ -474,7 +483,10 @@ One group member has used approximately 33 credits, another have used none. The 
 >
 > Answer:
 
-[This figure](figures/project_pipeline.png) shows the machine learning pipeline of our system. The diagram's starting point is our local setup which is connected to the weights and bias account logging hyperparameters as well as the hydra config files. The logs produced by training a model locally can be visualized using the wandb.ai project website.
+```markdown
+![This figure](figures/project_pipeline.png)
+```
+The diagram shows the machine learning pipeline of our system. The diagram's starting point is our local setup which is connected to the weights and bias account logging hyperparameters as well as the hydra config files. The logs produced by training a model locally can be visualized using the wandb.ai project website.
 
 From the development point of view, the next steps are the pre-commit, commit, and push to the Github of the project and the dvc. The dvc will push some files and dependencies to cloud buckets, while keeping the verison info on Github. The local machine is able to access the files from the cloud buckets (data) and updates in code from the Github repository via pull commands.
 
