@@ -269,7 +269,13 @@ It also allowed us to make sure that everyone had the same data laid out in the 
 >
 > Answer:
 
---- question 11 fill here ---
+We used Github Actions to implement our continuous integration.
+Specifically, it consists of linting with `flake8` and unit testing with `pytest`.
+This helps ensure that new merge requests follow the code standards and don't break existing functionality.
+As we do not have any platform dependant code, we did not run the pipeline over multiple systems, but we did require both steps to succeed.
+Further, as the steps in the pipeline where rather simple, we found it best to keep them in a single flow, which not only meant
+we only had to have a single file, but it also reduced runtime by not having to set up twice.
+A workflow can be seed at TODO.
 
 ## Running code and tracking experiments
 
@@ -323,18 +329,17 @@ Even with seeds, PyTorch does not guarantee exactly the same outputs.
 >
 > Answer:
 
+The first figure shows a simple training loss curved tracked in Weights & Biases.
+This is one of the most important metrics to track during training, both to inform us about training stability and overfitting in tandem with the validation loss.
+The second figure shows how Weights & Biases was uses to track different experiments, where we could filter by hyperparameter choices and other variables.
+This is one way to overcome the classical problem of accidentally overriding previous experiments or messing up which were which.
 
 ```markdown
-![Weights and biases figure](figures/wandb.png)
+![Weights and biases figure](figures/wandb_ours.png)
 ```
 ```markdown
-![Bucket](figures/bucket.png)
+![Weights and biases figure](figures/wandb_ours2.png)
 ```
-```markdown
-![Build](figures/build.png)
-```
-
-<!-- TODO: replace the images above with our images-->
 
 ### Question 15
 
@@ -382,7 +387,10 @@ Even with seeds, PyTorch does not guarantee exactly the same outputs.
 > Answer:
 
 <!-- TODO finish this -->
-We made use of the following services on google cloud platform: Vertex AI, Bucket, ... .
+We made use of the following services on google cloud platform:
+- Buckets for storing Docker images
+- Cloud Run for building the inference API
+- Cloud Functions for the same TODO???
 
 ### Question 18
 
