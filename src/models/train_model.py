@@ -12,7 +12,7 @@ from src.data import SignMNISTDataset
 
  
 @hydra.main(version_base="1.3", config_path="conf/", config_name="config.yaml")
-def train(cfg: DictConfig):
+def train(cfg: DictConfig) -> None:
 
     logger = logging.getLogger(__name__)
     logger.info("Loading training set")
@@ -47,7 +47,7 @@ def train(cfg: DictConfig):
         ),
     ) as prof:
         for e in range(cfg.hyperparameters.epochs):
-            logging.info("Epooch %i / %i" % (e + 1, cfg.hyperparameters.epochs))
+            logging.info("Epoch %i / %i" % (e + 1, cfg.hyperparameters.epochs))
             running_loss = 0
             for i, (images, labels) in enumerate(trainloader):
                 logging.debug("Batch %i / %i" % (i + 1, len(trainloader)))

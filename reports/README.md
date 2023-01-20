@@ -42,62 +42,6 @@ short, too long, have you included an image when asked to.
 For both functions to work it is important that you do not rename anything. The script have two dependencies that can
 be installed with `pip install click markdown`.
 
-## Overall project checklist
-
-The checklist is *exhaustic* which means that it includes everything that you could possible do on the project in
-relation the curricilum in this course. Therefore, we do not expect at all that you have checked of all boxes at the
-end of the project.
-
-### Week 1
-
-* [x] Create a git repository
-* [x] Make sure that all team members have write access to the github repository
-* [x] Create a dedicated environment for you project to keep track of your packages
-* [x] Create the initial file structure using cookiecutter
-* [ ] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
-* [x] Add a model file and a training script and get that running
-* [x] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
-* [x] Remember to comply with good coding practices (`pep8`) while doing the project
-* [x] Do a bit of code typing and remember to document essential parts of your code
-* [x] Setup version control for your data or part of your data
-* [x] Construct one or multiple docker files for your code
-* [x] Build the docker files locally and make sure they work as intended
-* [x] Write one or multiple configurations files for your experiments
-* [x] Used Hydra to load the configurations and manage your hyperparameters
-* [x] When you have something that works somewhat, remember at some point to to some profiling and see if
-      you can optimize your code
-* [x] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
-      consider running a hyperparameter optimization sweep.
-* [ ] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
-
-### Week 2
-
-* [x] Write unit tests related to the data part of your code
-* [x] Write unit tests related to model construction and or model training
-* [x] Calculate the coverage.
-* [x] Get some continuous integration running on the github repository
-* [x] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
-* [x] Create a trigger workflow for automatically building your docker images
-* [x] Get your model training in GCP using either the Engine or Vertex AI
-* [x] Create a FastAPI application that can do inference using your model
-* [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
-
-### Week 3
-
-* [x] Check how robust your model is towards data drifting
-* [ ] Setup monitoring for the system telemetry of your deployed model
-* [ ] Setup monitoring for the performance of your deployed model
-* [ ] If applicable, play around with distributed data loading
-* [ ] If applicable, play around with distributed model training
-* [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed
-
-### Additional
-
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
-* [x] Uploaded all your code to github
-
 ## Group information
 
 ### Question 1
@@ -128,10 +72,10 @@ s183910, s183898, s222955, s183912
 > *package to do ... and ... in our project*.
 >
 > Answer:
+<!-- TODO elaborate and check -->
+From the Pytorch ecosystem we have used one of the Pytorch Image models named MobileNet-V2. This is an already pretrained and optimized model which is much better than starting from scratch. Like this, we did not need to use much time on building our own model and could focus on implementing our inference solutions more quickly.
 
-<!-- TODO !!!! -->
-<!-- We used PyTorch for implementing our model and training and inference. -->
-From the Pytorch ecosystem we used one of the Pytorch Image models named MobileNet-V2.
+We also used the OpenCV for python to showcase the deployed model, and demonstrate the model's translation of a hand gesture into the corresponding letter. Additionally, we used the `request` package in python instead of `curl` to send POST requests to our inference API.
 
 ## Coding environment
 
@@ -150,10 +94,14 @@ From the Pytorch ecosystem we used one of the Pytorch Image models named MobileN
 >
 > Answer:
 
-<!-- TODO: Done, just double check docker commands -->
+<!-- TODO: READ -->
 We used `pipreqs` for generating a dependency list with exact versions.
 Development libraries, such as `pytest` were manually maintained in `requirements.txt`.
-To obtain a complete copy of the development environments, build the docker images using `docker build -f predict.dockerfile . -t predict:latest` for inference and `docker build -f train.dockerfile . -t train:latest`.
+To get a complete copy of our development environment one would only have to run the `make requirements` command in a python environment of their choice (provided both python and make are already installed).
+
+To obtain the input data one would have to execute the `make data` command which pulls from a dvc remote.
+
+To locally create the training and prediction environments a new team member would have to build the docker images using `docker build -f predict.dockerfile . -t predict:latest` for inference and `docker build -f train.dockerfile . -t train:latest`, or simply `make build-docker-train` and `make build-docker-predict`.
 
 ### Question 5
 
@@ -167,19 +115,21 @@ To obtain a complete copy of the development environments, build the docker imag
 > *because we did not use any ... in our project. We have added an ... folder that contains ... for running our*
 > *experiments.*
 > Answer:
-
-<!-- TODO check this oute -->
+<!-- TODO: write about api folder -->
 The project is structured using the cookiecutter data science template.
 We filled in `predict_model.py` and `train_model.py`, and we added some extra utility files, e.g. `src/data/__init__.py`, which builds the dataset.
-We did not fill in `make_dataset.py`, as the the data requires little preprocessing, which is done at runtime, hence the folders `interim`, `processed`, and `external` is not used. These folders are therefore deleted.
+We did not fill in `make_dataset.py`, as the the data required very little preprocessing, which was instead done at runtime. For this reason, the folders `interim`, `processed`, and `external` were not used and were therefore removed.
 
-We have added the folder `tests` which contains our tests of data and the model. We have also added the folder `outputs` which is created by running the `train_model.py`. This folder contains the outputs of hydra which saves the logs and cofigurationfiles, to document how the training went and what hyperparameters were used.
+We have added the folder `tests` which contains our unit tests concerning the data and the model.
 
-We have also added multiple dockerfiles in relation to the build of docker images and containers with all the dependensies required to run specific parts of our project. DVC-files and a DVC-folder are also added to manage the large amount of data in the cloud.
+A `.dvc` folder was also added to store meatfiles associated with data versioning using the cloud. Our training and test dataset was moderately large and was first stored using Google Drive, then GCP Bucket.
 
-The folder `wandb` has also been added to manage the hyperparameters and do the main visualizations.
+The `api` folder **TODO** dockerfiles?
 
-<!-- `visualize.py` was also not filled out, as we did the main visualization on wandb. -->
+Apart from the previous structure we each used the following additional setup locally:
+
+- When running `train_model.py`, data generated by hydra (e.g. logs, configuration files) was saved to a folder named `output` for documentation purposes.
+- A folder named `wandb` was added to manage hyperparameters and main visualizations for Weights & Biases.
 
 ### Question 6
 
@@ -189,10 +139,10 @@ The folder `wandb` has also been added to manage the hyperparameters and do the 
 > Answer length: 50-100 words.
 >
 > Answer:
-<!-- DONE I think -->
-To ensure code similarity, we used the `black` autoformatter.
-This was enforced with a pre-commit git hook that made sure no one would forget to use it.
-Further, we linted the code with `flake8`.
+
+To ensure code similarity, we used the `black` autoformatter, the `isort` utility and the `flake8` linter with slightly altered configurations. These rules were enforced with a pre-commit git hook that made sure no one would forget to use them (see `.pre-commit-config.yaml`).
+
+Good formatting and code quality improves readability, making it easier for all team members to understand and alter parts of the implementation later. In large projects this is especially important since they change a lot over time and many people contribute to them. Without enforced formatting rules the code would quickly become difficult to maintain.
 
 ## Version control
 
@@ -201,25 +151,22 @@ Further, we linted the code with `flake8`.
 
 ### Question 7
 
-> **How many tests did you implement and what are they testing in your code?**
->
-> Answer length: 50-100 words.
->
-> Example:
-> *In total we have implemented X tests. Primarily we are testing ... and ... as these the most critical parts of our*
-> *application but also ... .*
+> **How many tests did you implement?**
 >
 > Answer:
 
-We implemented six unit tests for a coverage of 23 %, focusing mainly on the data and model.
-Notable, the training loop and prediction were not covered, as these are larger, self-contained blocks of code where writing unit tests is both harder and provide less benefit over testing stand-alone functions.
+We implemented six unit tests for a coverage of 23 %, focusing mainly on the data and model. These test the shape and dimensions of the input and output of the model and the data samples.
+Notably, the training loop and prediction were not covered, as these are larger, self-contained blocks of code where writing unit tests is both harder and provide less benefit over testing stand-alone functions.
+
+The unit tests for data also focus on dataset and batch size when loading.
+
 
 ### Question 8
 
 > **What is the total code coverage (in percentage) of your code? If you code had an code coverage of 100% (or close**
 > **to), would you still trust it to be error free? Explain you reasoning.**
 >
-> Answer length: 100-200 words.
+> **Answer length: 100-200 words.**
 >
 > Example:
 > *The total code coverage of code is X%, which includes all our source code. We are far from 100% coverage of our **
@@ -227,19 +174,15 @@ Notable, the training loop and prediction were not covered, as these are larger,
 >
 > Answer:
 
-The code coverage is 23 %.
-This is not much, but does cover the central parts which are data loading and inference.
-This is far from 100 % code coverage.
-However, 100 % code average should not be the end all, be all goal, as this does not guarantee code correctness.
-It only measures if the code at any point has been run, and tests will rarely cover every input value a piece of code could receive, leading to edge cases not necessarily being discovered even under 100 % coverege.
-Further, near 100 % unit test coverage does not guarantee that every part plays nicely together, even if they work individually.
+The code coverage is 23 %. This is not much, but does cover the central parts which are data loading and inference.
+It is important to note that code coverage only measures how much of the code has been run at any point during testing. Therefore it does not guarantee code correctness as tests will rarely cover every input value. This leads to some edge cases not necessarily being discovered. Therefore it is better to concentrate on writing more relevant tests than just aiming for a high code coverage. Furthermore, near 100 % unit test coverage does not guarantee that different components work well together, even if they work as expected individually.
 
 ### Question 9
 
 > **Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
 > **pull request can help improve version control.**
 >
-> Answer length: 100-200 words.
+> **Answer length: 100-200 words.**
 >
 > Example:
 > *We made use of both branches and PRs in our project. In our group, each member had an branch that they worked on in*
@@ -247,10 +190,7 @@ Further, near 100 % unit test coverage does not guarantee that every part plays 
 >
 > Answer:
 
-<!-- TODO: maybe add more here-->
-We made use of both branches and pull requests during our project work. We created new branches as we needed them for testing and implementing specific features, followed by creating a pull request for merging the feature branch into the main branch, once the new feature was complete.
-
-
+We made use of both branches and pull requests during our project work. We created new branches as we needed them for testing and implementing specific features, followed by creating a pull request for merging the feature branch into the main branch, once the new feature was complete. Hence, we have had a branch for concerning the replacement of model, the implementing of live demo functions in API, for the implementing of pre-commit features and many more. Our practice regarding the pull requests was to always have another group member doing the approving of it. This was done for the sake of practice and for collaboration.
 
 ### Question 10
 
@@ -265,9 +205,8 @@ We made use of both branches and pull requests during our project work. We creat
 >
 > Answer:
 
-We saved our data to Google Drive and used DVC to manage it.
-This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving data to a git repository.
-It also allowed us to make sure that everyone had the same data laid out in the same way, which was also useful for pipelines and deployment.
+As an initial resolution, we stored the data on Google Drive and used DVC to manage it. Later we improved our storage solution with moving the data from Google drive to the Data Storage buckets in Google Cloud storage, and continued managing it with DVC. This allowed us to change the data if needed without losing history, and it prevented the impracticalities of saving large amounts of data to a git repository.
+It also allowed us to make sure that all group memebers had the same data laid out in the same way, which was also useful for pipelines and deployment.
 
 ### Question 11
 
@@ -308,7 +247,7 @@ A finished workflow can be seen <a href="https://github.com/s183910/MLOps_projec
 >
 > Answer:
 
-We used hydra for controlling hyperparameters, as it allows for config files that help control which experiments were run and makes sure that the correct experiments are run.
+We stated the hyperparameter values in hydra config files, and used the hydra decorator added to the 'train'-function in the `train_model.py` to input the hyperparameters, and log the performance of the experiment run along with the hyperparameters used. We run an experiment by writting 'make train' in the root directory, which in turn calls the `traine_model.py`. One could also simply write 'python train_model.py', which would result in the same output.
 
 ### Question 13
 
@@ -323,10 +262,9 @@ We used hydra for controlling hyperparameters, as it allows for config files tha
 >
 > Answer:
 
-Config files are one part of the ansewr, making sure that there is no doubt on the hyperparameters.
-DVC also enables us to ensure that the data would be identical from machine to machine, and Docker allowed us to provide a controlled environment with guaranteed library versions, making sure that no changed behaviour in different libraries would have an effect.
-The only non-reproducibility comes from stochistic processes such as batch shuffling, which we did not control with seeds.
-Even with seeds, PyTorch does not guarantee exactly the same outputs.
+Config files are one part of the answer. These files are used to make sure that there is no doubt what hyperparameters resulted in which model performance.
+DVC also enables us to ensure that the data would be identical from machine to machine, and Docker allowed us to provide a controlled environment with guaranteed library versions, dependencies and packages, making sure that no changed behaviour in different libraries would have an effect.
+The only non-reproducibility comes from stochastic processes such as batch shuffling, which we did not control with seeds. Even with seeds, PyTorch does not guarantee exactly the same outputs.
 
 ### Question 14
 
@@ -344,16 +282,17 @@ Even with seeds, PyTorch does not guarantee exactly the same outputs.
 > Answer:
 
 The first figure shows a simple training loss curved tracked in Weights & Biases.
-This is one of the most important metrics to track during training, both to inform us about training stability and overfitting in tandem with the validation loss.
-The second figure shows how Weights & Biases was uses to track different experiments, where we could filter by hyperparameter choices and other variables.
+This is one of the most important metrics to track during training, both to inform us about training stability and overfitting together with the validation loss.
+
+The second figure shows how Weights & Biases was uses to track different experiments, where we could filter by hyperparameter choices and other variables. It provides important information concerning each model training like the state of the run, the runtime, the loss obtained etc.
+
 This is one way to overcome the classical problem of accidentally overriding previous experiments or messing up which were which.
 
-```markdown
+We did not perform a sweep, hence not using the extension of weights and biases to optimize the hyperparameters. We found logging the performance using hydra to be sufficient for this project, although we would definitely consider using sweep with weights and biases for more elaborate projects in the future, along with the easy sharing of performance plots.
+
+
 ![Weights and biases figure](figures/wandb_ours.png)
-```
-```markdown
-![Weights and biases figure](figures/wandb_ours2.png)
-```
+![Weights and biases table](figures/wandb_ours_table.png)
 
 ### Question 15
 
@@ -368,9 +307,12 @@ This is one way to overcome the classical problem of accidentally overriding pre
 >
 > Answer:
 
-We build three docker images: `predict.dockerfile` for doing inference, `trainer.dockerfile` for training, and `api/gcp_run/dockerfile` for deploying to GCP.
-The two first primarily differ in their entry points, with one starting training and the other evaluation.
-The final is quite different, as it does not have an entry point, but instead uses `CMD` to start the inference api.
+The image defined by `trainer.dockerfile` was used locally to train the model on pre-available data and save the resulting model state in a shared directory.
+
+The image defined by `predict.dockerfile` was used to load the trained model state, test some pre-available data and output the computed accuracy of the model.
+These two files are used for local deployment and primarily differ in their entry points, with one starting training and the other evaluation.
+
+The dockerfile found at `api/gcp_run/dockerfile` is used for deploying to GCP. THis does not have an entry point, but instead uses `CMD` to start the inference api.
 
 ### Question 16
 
@@ -387,7 +329,8 @@ The final is quite different, as it does not have an entry point, but instead us
 
 We did not enforce debugging practices, as we found this was best left to individual preferences and circumstances.
 The debugging methods used ranged from VS Code's built-in debugger to the IPython debugger (`ipdb`) to the never-failing `print` spam.
-We profiled our code after we got the main flows working to make sure that we were satisfied with the runtime, mainly that the bottlenecks were the neural networks as would be expected.
+
+We profiled our code after we got the main flows working to make sure that we were satisfied with the runtime. As would be expected, the main bottlenecks were the neural networks.
 
 ## Working in the cloud
 
@@ -406,7 +349,7 @@ We profiled our code after we got the main flows working to make sure that we we
 
 <!-- TODO finish this -->
 We made use of the following services on google cloud platform:
-- Buckets for storing Docker images
+- Buckets for storing Docker images and data storage
 - Cloud Run for building the inference API
 - Cloud Functions for the same TODO???
 
@@ -415,7 +358,7 @@ We made use of the following services on google cloud platform:
 > **The backbone of GCP is the Compute engine. Explained how you made use of this service and what type of VMs**
 > **you used?**
 >
-> Answer length: 100-200 words.
+> Answer length: 50-100 words.
 >
 > Example:
 > *We used the compute engine to run our ... . We used instances with the following hardware: ... and we started the*
@@ -423,7 +366,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 18 fill here ---
+We have created three different compute engine instances, where each instance is a virtuel machine. These were created in relation to the setup of Vertex AI in google cloud, which is meant to be used for training the model in the cloud. Each VM was created with the machine type e2-medium, with vCPU of one shared core and 4 GB memory.
 
 ### Question 19
 
@@ -432,8 +375,8 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-<!-- TODO write about this and maybe replace the image. -->
-[Our buckets](figures/bucket_ours.png).
+
+![The projects buckets on GCP](figures/bucket_ours.png)
 
 ### Question 20
 
@@ -442,7 +385,8 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 20 fill here ---
+
+![The projects registry on GCP](figures/registry_ours.png)
 
 ### Question 21
 
@@ -451,8 +395,8 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
-<!-- TODO write about this and maybe replace the image. -->
-[Our GCP cloud build history](figures/build_ours.png).
+
+![The projects builds on GCP](figures/build_ours.png)
 
 ### Question 22
 
@@ -468,7 +412,12 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 22 fill here ---
+We deployed the model using FastAPI, docker and Cloud RUN.
+
+A POST request is used in FastAPI to receive a list of png images, which are then processed in a separate python file, which includes reshaping, converting to greyscale, and converting to tensor. The tensors are used for inference, and the resulting letter is returned to the client as a response. To deploy the API, Cloud RUN is used, which requires a dockerfile, to Cloud Build our api image. By referencing our Cloud repository (which is linked to our Git repository) along with the location of our API dockerfile, a trigger is set such that (only) commits that include changes to files in our api folder, will trigger a new build. Cloud RUN returns a url endpoint for the API which can now be accessed 24/7 and independently of our own computers.
+
+To test the API another python script was written which used opencv to stream images from a webcam. These are POST-ed to the API and the predicted letter is received as a response.
+Postman was used for testing.
 
 ### Question 23
 
@@ -483,7 +432,13 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 23 fill here ---
+According to the course material, we set a function invocation counter where an alert is fired if the function is invoked more than twice during a 5 minute period. This was only used as a test alert and probably more fine-tuned parameters would be needed in the future.
+
+Overall we did not prioritize this topic as it seems Google Cloud does quite a bit of monitoring, in terms of security, activity, speed, etc. It is also possible to set a maximum number of requests and "Cloud Armor Network Security" can protect against e.g. DDoS attacks.
+Due to time constraints the API is not programmed to handle bad requests (e.g. wrong file formats or images too small to resize).
+
+It could be interesting to log the images sent to the API, along with statistics on classes but this does pose some ethics questions regarding anonymity and privacy. It is clear that the model currently performs very poorly against input images, and it would be cool to have another API endpoint that in addition to an image also recieves a label, such that we could extend our dataset remotely with webcams, by e.g. typing the letter we are presenting to the webcam.
+
 
 ### Question 24
 
@@ -497,7 +452,7 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 24 fill here ---
+One group member has used approximately 33 credits, another have used none. The remainin two group members ran into problems concerning 'denied permission' to access the billing information, and the issue was not resolved in time, hence also no credits. Thereby, 33 credits used in total.
 
 ## Overall discussion of project
 
@@ -512,13 +467,20 @@ We made use of the following services on google cloud platform:
 > Answer length: 200-400 words
 >
 > Example:
->
+> *
 > *The starting point of the diagram is our local setup, where we integrated ... and ... and ... into our code.*
 > *Whenever we commit code and puch to github, it auto triggers ... and ... . From there the diagram shows ...*
 >
 > Answer:
 
---- question 25 fill here ---
+![The project pipeline](figures/project_pipeline.png)
+The diagram shows the machine learning pipeline of our system. The diagram's starting point is our local setup which is connected to the weights and bias account logging hyperparameters as well as the hydra config files. The logs produced by training a model locally can be visualized using the wandb.ai project website.
+
+From the development point of view, the next steps are the pre-commit, commit, and push to the Github of the project and the dvc. The dvc will push some files and dependencies to cloud buckets, while keeping the verison info on Github. The local machine is able to access the files from the cloud buckets (data) and updates in code from the Github repository via pull commands.
+
+Looking at the Github representation on the pipeline diagram, four Google cloud related actions follow. These actions are responsible for storage, and monitoring on Google cloud. Whenever we push source code to the main branch on github, or build a new docker image, a trigger in Google cloud is activated, which helps us monitor the project builds. From the last and outer right part of the diagram the inference API is seen, and for this, Google run is the backend, which a user can access to use our application.
+
+
 
 ### Question 26
 
@@ -532,7 +494,14 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 26 fill here ---
+Setting up the deployment environment and the Google cloud hosting proved to be the most difficult and time consuming part of the project. This was mainly because the team was not very familiar with the Google Cloud platform's machine learning solutions, so even making sense of the interface was a bit overwhelming. It took a lot of trial and error and meticulous tutorial and documentation reading to finish setting up the whole pipeline but we managed to pull through.
+
+Setting up docker was also a time consuming process since if a missing file or a wrong command was discovered too late in the configuration file then the whole container had to be rebuilt (which resulted in a fairly slow feedback loop during development).
+
+A more personal struggle of the team was coordinating work during the last two weeks as one of the members had to relocate to the United States. We overcame this difficulty by planning early, sharing end-of-day status reports with each other via slack and consulting by call when the time difference allowed it.
+
+Additionally, an obstacle which we encountered was one group member accidentally working on a google cloud project with the same name as as the actual project. It took some time before the group figured out the mistake and some work had to be re-done.
+Apart from these slight hiccups the overall experience of completing this project was a positive one.
 
 ### Question 27
 
@@ -549,4 +518,14 @@ We made use of the following services on google cloud platform:
 >
 > Answer:
 
---- question 27 fill here ---
+In general students contributed equally to the project, and we often worked side-by-side.
+
+In case specific contributions are needed:
+
+Katrine Bay s183910: Cookie-cutter, Git repo and Google Cloud setup, Buckets, Weights and biases setup and reports.
+
+Rasmus Bryld s183898: FastAPI, Cloud Run deployment, Demo.
+
+Asger Schultz s183912: Pre-trained model setup, docker, Git actions.
+
+Eper Stinner s222955: Initial model setup, docker/Makefile, Git CI, pre-commits.
