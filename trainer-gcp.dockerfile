@@ -19,6 +19,7 @@ COPY .dvc/config /.dvc/config
 
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install -U "dvc[gs]"
+RUN dvc config core.no_scm true
 RUN dvc pull
 
 ENTRYPOINT ["python", "-u", "src/models/train_model.py"]
