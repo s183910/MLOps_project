@@ -328,10 +328,12 @@ The dockerfile found at `api/gcp_run/dockerfile` is used for deploying to GCP. T
 >
 > Answer:
 
-We did not enforce debugging practices, as we found this was best left to individual preferences and circumstances.
-The debugging methods used ranged from VS Code's built-in debugger to the IPython debugger (`ipdb`) to the never-failing `print` spam.
+We did not enforce strict debugging practices, as we found this was best left to individual preferences and circumstances.
+The debugging methods used by the team members ranged from VS Code's built-in debugger to the IPython debugger (`ipdb`) to the never-failing `print` spam.
 
-We profiled our code after we got the main flows working to make sure that we were satisfied with the runtime. As would be expected, the main bottlenecks were the neural networks.
+We did profile our code after we had gotten the main flows to work, in order to be sure that we were satisfied with the runtime of the model. As would be expected, the main bottlenecks were running the training loops of the neural networks.
+
+We did also profile the test_envorinment.py to inspect how many times each method is called, and for how long each of these methods take.
 
 ## Working in the cloud
 
