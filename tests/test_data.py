@@ -1,12 +1,8 @@
 import os
 
 import pytest
-import torch
 from torch import utils
 from torchvision import transforms
-
-import wandb
-import numpy as np
 
 from src.data import SignMNISTDataset
 from tests import PATH_DATA
@@ -20,9 +16,12 @@ def load_dataset(path, n):
     ), f"Dataset did not have the correct number of samples: {len(dataset)} != {n}"
     images, labels = next(iter(dataloader))
     image_shape_error = f"Data feature set: expected shape {(n, 3, 28, 28)}, but got shape {images.shape}"
-    label_shape_error = f"Data label set: expected shape {(1,)}, but got shape {labels.shape}"
+    label_shape_error = (
+        f"Data label set: expected shape {(1,)}, but got shape {labels.shape}"
+    )
     assert tuple(images.shape) == (1, 3, 28, 28), image_shape_error
     assert tuple(labels.shape) == (1,), label_shape_error
+
 
 @pytest.mark.skipif(
     not os.path.exists(os.path.join(PATH_DATA, "raw/sign_mnist_train.csv")),
@@ -32,6 +31,7 @@ def test_load_training_dataset():
     path = os.path.join(PATH_DATA, "raw/sign_mnist_train.csv")
     N_train = 27455
     load_dataset(path, N_train)
+
 
 @pytest.mark.skipif(
     not os.path.exists(os.path.join(PATH_DATA, "raw/sign_mnist_test.csv")),

@@ -1,8 +1,8 @@
 import pandas as pd
-from evidently.test_suite import TestSuite
-from evidently.test_preset import DataStabilityTestPreset
-from evidently.report import Report
 from evidently.metric_preset import DataDriftPreset
+from evidently.report import Report
+from evidently.test_preset import DataStabilityTestPreset
+from evidently.test_suite import TestSuite
 
 image = pd.read_csv("data/raw/sign_mnist_train.csv")
 
@@ -21,7 +21,9 @@ data_stability = TestSuite(
     ]
 )
 data_stability.run(
-    current_data=data_frame.iloc[:391], reference_data=data_frame.iloc[391:], column_mapping=None
+    current_data=data_frame.iloc[:391],
+    reference_data=data_frame.iloc[391:],
+    column_mapping=None,
 )
 data_stability.save_html("src/visualization/DataStability.html")
 
