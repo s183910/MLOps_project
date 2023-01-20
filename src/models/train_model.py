@@ -10,7 +10,7 @@ from torchvision import transforms
 import wandb
 from src.data import SignMNISTDataset
 
- 
+
 @hydra.main(version_base="1.3", config_path="conf/", config_name="config.yaml")
 def train(cfg: DictConfig) -> None:
 
@@ -74,4 +74,3 @@ def train(cfg: DictConfig) -> None:
 
 if __name__ == "__main__":
     train()
-
