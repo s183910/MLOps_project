@@ -22,4 +22,4 @@ RUN pip install -U "dvc[gs]"
 RUN dvc config core.no_scm true
 RUN dvc pull
 
-ENTRYPOINT ["python", "-u", "src/models/train_model.py"]
+ENTRYPOINT ["python", "-u", "src/models/predict_model.py"]

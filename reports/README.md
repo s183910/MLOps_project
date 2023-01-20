@@ -353,7 +353,10 @@ We made use of the following services on google cloud platform:
 Cloud storage was used to store both our data and Docker images remotely.
 A GCP Bucket was set up as the remote target for data version control enabling us to push and pull from the cloud.
 
-The inference API was built using Cloud Run and Cloud Functions in the following way:
+Triggers were set up to build the trainer and predictor docker images whenever there is a push to the main branch of the cloud repository (which is set up to track the git repository).
+All the container images that were built during the project can be viewed on the Container Registry.
+
+The inference API was built and deployed using Cloud Run and Cloud Functions in the following way:
 
 
 ### Question 18
@@ -521,7 +524,7 @@ Apart from these slight hiccups the overall experience of completing this projec
 >
 > Answer:
 
-In general students contributed equally to the project, and we often worked side-by-side.
+In general students contributed equally to the project, and we often worked side-by-side. Everyone worked on the documentation of the project as well.
 
 In case specific contributions are needed:
 
@@ -531,4 +534,4 @@ Rasmus Bryld s183898: FastAPI, Cloud Run deployment, Demo.
 
 Asger Schultz s183912: Pre-trained model setup, docker, Git actions.
 
-Eper Stinner s222955: Initial model setup, docker/Makefile, Git CI, pre-commits.
+Eper Stinner s222955: Initial model setup, docker/Makefile, Git CI, pre-commits, docker build trigger on GCP.
