@@ -72,8 +72,10 @@ s183910, s183898, s222955, s183912
 > *package to do ... and ... in our project*.
 >
 > Answer:
-<!-- TODO elaborate and check -->
-From the Pytorch ecosystem we have used one of the Pytorch Image models named MobileNet-V2. This is an already pretrained and optimized model which is much better than starting from scratch. Like this, we did not need to use much time on building our own model and could focus on implementing our inference solutions more quickly.
+
+From the Pytorch ecosystem we have used one of the Pytorch Image models named MobileNet-V2. This is an already pretrained and optimized model which would possibly achieve better performance than if we started from scratch. Like this, we did not need to use much time on building our own model and could focus on implementing our inference solutions more quickly. We did however experience, that our initial 'placeholder' model was performing with higher accuracy.
+
+We have used cookiecutter to set up the prject structure correctly, used hydra and Docker for config files for reproducability, weights and biases for handling hyperparameters, Github and DVC for version control.
 
 We also used the OpenCV for python to showcase the deployed model, and demonstrate the model's translation of a hand gesture into the corresponding letter. Additionally, we used the `request` package in python instead of `curl` to send POST requests to our inference API.
 
@@ -94,7 +96,7 @@ We also used the OpenCV for python to showcase the deployed model, and demonstra
 >
 > Answer:
 
-<!-- TODO: READ -->
+
 We used `pipreqs` for generating a dependency list with exact versions.
 Development libraries, such as `pytest` were manually maintained in `requirements.txt`.
 To get a complete copy of our development environment one would only have to run the `make requirements` command in a python environment of their choice (provided both python and make are already installed).
@@ -115,7 +117,8 @@ To locally create the training and prediction environments a new team member wou
 > *because we did not use any ... in our project. We have added an ... folder that contains ... for running our*
 > *experiments.*
 > Answer:
-<!-- TODO: write about api folder -->
+
+
 The project is structured using the cookiecutter data science template.
 We filled in `predict_model.py` and `train_model.py`, and we added some extra utility files, e.g. `src/data/__init__.py`, which builds the dataset.
 We did not fill in `make_dataset.py`, as the the data required very little preprocessing, which was instead done at runtime. For this reason, the folders `interim`, `processed`, and `external` were not used and were therefore removed.
@@ -123,8 +126,6 @@ We did not fill in `make_dataset.py`, as the the data required very little prepr
 We have added the folder `tests` which contains our unit tests concerning the data and the model.
 
 A `.dvc` folder was also added to store meatfiles associated with data versioning using the cloud. Our training and test dataset was moderately large and was first stored using Google Drive, then GCP Bucket.
-
-The `api` folder **TODO** dockerfiles?
 
 Apart from the previous structure we each used the following additional setup locally:
 
@@ -281,10 +282,10 @@ The only non-reproducibility comes from stochastic processes such as batch shuff
 >
 > Answer:
 
-The first figure shows a simple training loss curved tracked in Weights & Biases.
-This is one of the most important metrics to track during training, both to inform us about training stability and overfitting together with the validation loss.
+The first figure shows a simple training loss curve tracked and visualized in Weights & Biases.
+This is one of the most important metrics to track during training. This metric can inform us about the stability of the training as well as whether the model ends up overfitting during training. From that we as developers can optimize the model, change hyperparameters or train for a shorter period of time.
 
-The second figure shows how Weights & Biases was uses to track different experiments, where we could filter by hyperparameter choices and other variables. It provides important information concerning each model training like the state of the run, the runtime, the loss obtained etc.
+The second figure shows how Weights & Biases was uses to track different experiments. In the WandB website we are able to filter the experiment runs by the choice of hyperparameter and other variables. It provides important information concerning each model training like the state of the run, the runtime, the loss obtained etc.
 
 This is one way to overcome the classical problem of accidentally overriding previous experiments or messing up which were which.
 
@@ -347,7 +348,7 @@ We profiled our code after we got the main flows working to make sure that we we
 >
 > Answer:
 
-<!-- TODO finish this -->
+
 We made use of the following services on google cloud platform:
 Cloud storage was used to store both our data and Docker images remotely.
 A GCP Bucket was set up as the remote target for data version control enabling us to push and pull from the cloud.
