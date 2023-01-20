@@ -227,10 +227,11 @@ We used Github Actions to implement our continuous integration.
 Specifically, it consists of linting with `flake8` and unit testing with `pytest`.
 This helps ensure that new merge requests follow the code standards and don't break existing functionality.
 As we do not have any platform dependant code, we did not run the pipeline over multiple systems, but we did require both steps to succeed.
-Further, as the steps in the pipeline where rather simple, we found it best to keep them in a single flow, which not only meant
-we only had to have a single file, but it also reduced runtime by not having to set up twice.
+Further, as the steps in the pipeline where rather simple, we found it best to keep them in a single flow, which not only meant that we only had to have a single file, but it also reduced runtime by not having to set up twice.
 A finished workflow can be seen <a href="https://github.com/s183910/MLOps_project/actions/runs/3955272588">here</a>.
 
+The Github Actions described above were set to run both on pull requests and whenever we made pushes to the main branch, making errors more visible to everyone on the team.
+We also made a habit of using Github Pull Requests for handling large changes and feature additions. Since one of our team members could only work remotely on the project, making changes more visible in this way was useful. We also made a habit of reviewing/approving each other's pull request before a merge.
 ## Running code and tracking experiments
 
 > In the following section we are interested in learning more about the experimental setup for running your code and
@@ -376,6 +377,7 @@ The inference API was built and deployed using Cloud Run and Cloud Functions in 
 
 We have created three different compute engine instances, where each instance is a virtuel machine. These were created in relation to the setup of Vertex AI in google cloud, which is meant to be used for training the model in the cloud. Each VM was created with the machine type e2-medium, with vCPU of one shared core and 4 GB memory.
 
+As our dataset was not large enough to warrant running all training in the cloud, we did not make use of the Compute Engine to its full potential. With a larger dataset, training would be moved to a VM.
 ### Question 19
 
 > **Insert 1-2 images of your GCP bucket, such that we can see what data you have stored in it.**
