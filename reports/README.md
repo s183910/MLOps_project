@@ -349,9 +349,11 @@ We profiled our code after we got the main flows working to make sure that we we
 
 <!-- TODO finish this -->
 We made use of the following services on google cloud platform:
-- Buckets for storing Docker images and data storage
-- Cloud Run for building the inference API
-- Cloud Functions for the same TODO???
+Cloud storage was used to store both our data and Docker images remotely.
+A GCP Bucket was set up as the remote target for data version control enabling us to push and pull from the cloud.
+
+The inference API was built using Cloud Run and Cloud Functions in the following way:
+
 
 ### Question 18
 
