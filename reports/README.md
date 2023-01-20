@@ -508,7 +508,7 @@ Setting up the deployment environment and the Google cloud hosting proved to be 
 
 Setting up docker was also a time consuming process since if a missing file or a wrong command was discovered too late in the configuration file then the whole container had to be rebuilt (which resulted in a fairly slow feedback loop during development).
 
-A more personal struggle of the team was coordinating work during the last two weeks as one of the members had to relocate to the United States. We overcame this difficulty by planning early, sharing end-of-day status reports with each other via slack and consulting by call when the time difference allowed it.
+A more personal struggle of the team was coordinating work during the last two weeks as one of the members had to relocate to the United States. We overcame this difficulty by planning early, sharing end-of-day status reports with each other via Slack and consulting by call when the time difference allowed that.
 
 Additionally, an obstacle which we encountered was one group member accidentally working on a google cloud project with the same name as as the actual project. It took some time before the group figured out the mistake and some work had to be re-done.
 Apart from these slight hiccups the overall experience of completing this project was a positive one.
